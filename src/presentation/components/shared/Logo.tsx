@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Image from 'next/image'
 
 import { condicionalStyles } from '@/presentation/helpers'
@@ -6,28 +7,31 @@ import { condicionalStyles } from '@/presentation/helpers'
 type LogoSize = 'lg' | 'md'
 
 interface LogoProps {
-  size?: LogoSize;
+  size?: LogoSize
 }
 
-export function Logo({ size = "lg" }: LogoProps) {
+export function Logo({ size = 'lg' }: LogoProps) {
   const imageSize: Record<LogoSize, number> = {
-    'lg': 50,
-    'md': 40,
+    lg: 50,
+    md: 40,
   }
 
   return (
-    <div className='flex items-center'>
+    <div className="flex items-center">
       <Image
         src="./shared/logo.svg"
         width={imageSize[size]}
         height={imageSize[size]}
-        alt='F3 Logo'
+        alt="F3 Logo"
       />
 
       <span
-        className={condicionalStyles('ml-4 text-primary-500 font-bold tracking-tighter text-[3rem]', {
-          'text-[2rem]': size === 'md',
-        })}
+        className={condicionalStyles(
+          'text-primary-500 ml-4 text-[3rem] font-bold tracking-tighter',
+          {
+            'text-[2rem]': size === 'md',
+          },
+        )}
       >
         Finance
       </span>
