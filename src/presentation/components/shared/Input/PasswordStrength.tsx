@@ -2,7 +2,7 @@ import React from 'react'
 
 import { condicionalStyles } from '@/presentation/helpers'
 
-export interface InputPasswordStrengthProps
+interface InputPasswordStrengthProps
   extends React.HTMLAttributes<HTMLDivElement> {
   value?: string
   minLength?: number
