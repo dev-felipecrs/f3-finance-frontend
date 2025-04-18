@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Button, Logo } from '@/presentation/components/shared'
-import { FormExample } from '@/presentation/components/example/Form'
+import { FormExample } from '@/presentation/components/Example/Form'
 
 export default function Home() {
   return (
