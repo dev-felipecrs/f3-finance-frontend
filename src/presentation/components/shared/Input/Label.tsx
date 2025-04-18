@@ -1,7 +1,6 @@
 import React from 'react'
 
-export interface InputLabelProps
-  extends React.LabelHTMLAttributes<HTMLLabelElement> {
+interface InputLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   required?: boolean
 }
 

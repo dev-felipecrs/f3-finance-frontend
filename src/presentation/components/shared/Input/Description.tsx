@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface InputDescriptionProps
+interface InputDescriptionProps
   extends React.HTMLAttributes<HTMLParagraphElement> {}
 
 export const InputDescription = React.forwardRef<

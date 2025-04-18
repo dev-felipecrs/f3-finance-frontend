@@ -6,13 +6,12 @@ import { Eye, EyeSlash } from '@phosphor-icons/react'
 
 import { condicionalStyles } from '@/presentation/helpers'
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
   ({ type, icon, iconPosition = 'right', ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false)
     const isPassword = type === 'password'
@@ -60,4 +59,4 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     )
   },
 )
-Input.displayName = 'Input'
+InputField.displayName = 'InputField'
