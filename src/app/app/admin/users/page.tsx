@@ -1,9 +1,7 @@
 import React from 'react'
 
+import { UsersList } from '@/presentation/components/pages/app/admin/users'
+
 export default function UsersPage() {
-  return (
-    <div>
-      <h1>hello, world</h1>
-    </div>
-  )
+  return <UsersList />
 }
