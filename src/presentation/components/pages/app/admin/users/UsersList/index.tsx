@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Trash } from '@phosphor-icons/react/dist/ssr'
+import { Plus, Trash } from '@phosphor-icons/react/dist/ssr'
 
 import { Button, Table } from '@/presentation/components/shared'
 
@@ -12,7 +12,10 @@ export function UsersList() {
           Usuários
         </strong>
 
-        <Button>Adicionar</Button>
+        <Button.Root>
+          <Plus size={16} className="text-white" />
+          <Button.Text>Adicionar</Button.Text>
+        </Button.Root>
       </header>
 
       <Table.Root>
