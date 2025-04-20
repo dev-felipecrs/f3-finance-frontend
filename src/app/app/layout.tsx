@@ -1,13 +1,17 @@
 import React from 'react'
 
-import { Sidebar } from '@/presentation/components/shared'
+import { Header, Sidebar } from '@/presentation/components/shared'
 
 export default function LayoutApp({ children }: React.PropsWithChildren) {
   return (
-    <div className="flex h-screen w-full">
+    <main className="bg-light-mode flex h-screen w-screen">
       <Sidebar />
 
-      {children}
-    </div>
+      <div className="flex-1">
+        <Header />
+
+        <div className="p-6">{children}</div>
+      </div>
+    </main>
   )
 }
