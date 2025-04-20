@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-light-mode: #f9f9fb;
+  --color-light-mode: #f9f9fb;
 
   --color-primary-0: #ffffff;
   --color-primary-100: #c7cefa;
