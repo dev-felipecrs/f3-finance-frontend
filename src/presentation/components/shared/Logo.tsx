@@ -27,8 +27,9 @@ export function Logo({ size = 'lg' }: LogoProps) {
 
       <span
         className={condicionalStyles(
-          'text-primary-500 ml-4 text-[3rem] font-bold tracking-tighter',
+          'text-primary-500 ml-4 font-bold tracking-tighter',
           {
+            'text-[3rem]': size === 'lg',
             'text-[2rem]': size === 'md',
           },
         )}
