@@ -1,3 +1,4 @@
+import { UseCaseErrorHandlerDecorator } from '@/presentation/decorators'
 import { ISignInUseCase } from '@/domain/use-cases/auth'
 import { HttpClient } from '@/data/protocols/http'
 
@@ -8,6 +9,7 @@ type SignUpReturn = {
   expires_in: number
 }
 
+@UseCaseErrorHandlerDecorator()
 export class SignInUseCase implements ISignInUseCase {
   constructor(private readonly http: HttpClient) {}
 

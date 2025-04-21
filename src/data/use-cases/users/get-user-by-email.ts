@@ -1,3 +1,7 @@
+import {
+  UseCaseAuthDecorator,
+  UseCaseErrorHandlerDecorator,
+} from '@/presentation/decorators'
 import { IGetUserByEmailUseCase } from '@/domain/use-cases/users'
 import { UserRole } from '@/domain/entities'
 import { HttpClient } from '@/data/protocols/http'
@@ -11,6 +15,8 @@ type SignUpReturn = {
   updated_at: Date
 }
 
+@UseCaseErrorHandlerDecorator()
+@UseCaseAuthDecorator()
 export class GetUserByEmailUseCase implements IGetUserByEmailUseCase {
   constructor(private readonly http: HttpClient) {}
 
