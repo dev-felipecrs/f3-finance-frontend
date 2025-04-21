@@ -51,7 +51,18 @@ export function Form() {
       <Input.Root>
         <Input.Label htmlFor="password">Senha</Input.Label>
 
-        <Input.Input id="password" type="password" placeholder="SuaSenha#123" />
+        <Input.Input
+          id="password"
+          type="password"
+          placeholder="SuaSenha#123"
+          {...register('password')}
+        />
+
+        {formState.errors.password && (
+          <Input.ErrorMessage>
+            {formState.errors.password.message}
+          </Input.ErrorMessage>
+        )}
       </Input.Root>
 
       <Link
