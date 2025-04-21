@@ -3,10 +3,16 @@ import React from 'react'
 
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { AUTHENTICATED_USER_COOKIE_KEY } from '@/presentation/constants'
 import { Button, Input } from '@/presentation/components/shared'
+import { revalidatePage, setCookie } from '@/presentation/actions'
+import { makeGetUserByEmailUseCase } from '@/infra/factories/users'
+import { makeSignInUseCase } from '@/infra/factories/auth'
+import { UserCookiePayload } from '@/domain/models'
 
 const LoginSchema = z.object({
   email: z.string().email({
@@ -16,14 +22,62 @@ const LoginSchema = z.object({
 })
 
 export function Form() {
+  const router = useRouter()
+
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof LoginSchema>
   >({
     resolver: zodResolver(LoginSchema),
   })
 
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
-    console.log({ data })
+  const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
+    const signInUseCase = makeSignInUseCase()
+
+    const sign = await signInUseCase.execute({
+      email: data.email,
+      password: data.password,
+    })
+
+    if (!sign.data) return // TODO: show toast with error message
+
+    const setAuthenticatedUserCookie = async (
+      data: UserCookiePayload | Omit<UserCookiePayload, 'userId' | 'roles'>,
+    ) => {
+      await setCookie({
+        name: AUTHENTICATED_USER_COOKIE_KEY,
+        value: data,
+        options: {
+          expires: 1000 * 60 * 60 * 24 * 30, // 30 days
+        },
+      })
+    }
+
+    await setAuthenticatedUserCookie({
+      accessToken: sign.data.accessToken,
+      refreshToken: sign.data.refreshToken,
+      expiredAt: new Date('2026-01-01'), // TODO: add expiredAt
+    })
+
+    const getUserByEmailUseCase = makeGetUserByEmailUseCase()
+    const user = await getUserByEmailUseCase.execute({
+      email: data.email,
+    })
+
+    if (!user.data) return // TODO: show toast with error message
+
+    const authenticatedUserCookiePayload: UserCookiePayload = {
+      userId: user.data.userId,
+      roles: user.data.roles,
+      accessToken: sign.data.accessToken,
+      refreshToken: sign.data.refreshToken,
+      expiredAt: new Date('2026-01-01'), // TODO: add expiredAt
+    }
+
+    await setAuthenticatedUserCookie(authenticatedUserCookiePayload)
+
+    await revalidatePage('/app')
+
+    router.push('/app')
   }
 
   return (
