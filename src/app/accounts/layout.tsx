@@ -24,7 +24,7 @@ export default function AccountLayout({ children }: React.PropsWithChildren) {
       </div>
 
       <main className="m-16 flex items-start justify-center">
-        <section className="relative bg-white px-[3rem] py-[2.5rem]">
+        <section className="relative max-w-[31rem] bg-white px-[3rem] py-[2.5rem] shadow-[0px_5px_15px_rgba(76,57,47,0.1)]">
           <div className="absolute -top-[3rem] -left-[3rem] -z-10 h-[14rem] w-[6.25rem]">
             <Image
               src="/accounts/rectangles.svg"
