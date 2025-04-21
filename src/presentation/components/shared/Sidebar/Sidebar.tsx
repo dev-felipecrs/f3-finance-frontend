@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { menuLinks } from '@/constants'
+import { menuLinks } from '@/presentation/constants'
 
 import { MenuSection } from './MenuSection'
 
