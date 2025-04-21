@@ -9,10 +9,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@/presentation/components/shared'
 
 const LoginSchema = z.object({
-  email: z.string().email({
+  email: z.string({ message: 'Campo obrigatório' }).email({
     message: 'E-mail inválido',
   }),
-  password: z.string(),
+  password: z.string({ message: 'Campo obrigatório' }),
 })
 
 export function Form() {
