@@ -1,11 +1,6 @@
-import { enUS, es, ptBR } from 'date-fns/locale'
-import {
-  add as dateFnsAdd,
-  format as dateFnsFormat,
-  Locale as DateFnsLocale,
-} from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { add as dateFnsAdd, format as dateFnsFormat } from 'date-fns'
 
-import { Locale } from '@/domain/models'
 import { Add, Format } from '@/data/protocols/date'
 
 export class DateFnsAdapter implements Add, Format {
@@ -17,15 +12,9 @@ export class DateFnsAdapter implements Add, Format {
     return result
   }
 
-  format(date: Date, pattern: string, locale: Locale): Format.Output {
-    const localeStrategy: Record<Locale, DateFnsLocale> = {
-      en: enUS,
-      es,
-      pt: ptBR,
-    }
-
+  format(date: Date, pattern: string): Format.Output {
     const result = dateFnsFormat(date, pattern, {
-      locale: localeStrategy[locale],
+      locale: ptBR,
     })
 
     return result
