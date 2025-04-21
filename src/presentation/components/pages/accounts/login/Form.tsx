@@ -126,7 +126,7 @@ export function Form() {
         Esqueceu sua senha?
       </Link>
 
-      <Button.Root type="submit" isLoading={formState.isLoading}>
+      <Button.Root type="submit" isLoading={formState.isSubmitting}>
         <Button.Text>Entrar</Button.Text>
       </Button.Root>
     </form>

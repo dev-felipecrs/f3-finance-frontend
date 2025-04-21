@@ -14,6 +14,7 @@ export class SignInUseCase implements ISignInUseCase {
   async execute(
     input: ISignInUseCase.Input,
   ): Promise<HttpClient.Output<ISignInUseCase.Output>> {
+    console.log(process.env)
     const response = await this.http.on<SignUpReturn>({
       url: process.env.BASE_API_URL + '/auth/sign-in',
       method: 'POST',
