@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AUTHENTICATED_USER_COOKIE_KEY } from '@/presentation/constants'
 import { Button, Input } from '@/presentation/components/shared'
 import { revalidatePage, setCookie } from '@/presentation/actions'
+import { SonnerAdapter } from '@/infra/toast'
 import { makeGetUserByEmailUseCase } from '@/infra/factories/users'
 import { makeSignInUseCase } from '@/infra/factories/auth'
 import { DateFnsAdapter } from '@/infra/date'
@@ -26,6 +27,7 @@ export function Form() {
   const router = useRouter()
 
   const { add } = new DateFnsAdapter()
+  const { toast } = new SonnerAdapter()
 
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof LoginSchema>
@@ -41,7 +43,12 @@ export function Form() {
       password: data.password,
     })
 
-    if (!sign.data) return // TODO: show toast with error message
+    if (!sign.data) {
+      return toast({
+        text: sign.error?.message || '',
+        status: 'error',
+      })
+    }
 
     const setAuthenticatedUserCookie = async (
       data: UserCookiePayload | Omit<UserCookiePayload, 'userId' | 'roles'>,
@@ -55,8 +62,6 @@ export function Form() {
       })
     }
 
-    console.log(sign.data)
-
     await setAuthenticatedUserCookie({
       accessToken: sign.data.accessToken,
       refreshToken: sign.data.refreshToken,
@@ -68,7 +73,12 @@ export function Form() {
       email: data.email,
     })
 
-    if (!user.data) return // TODO: show toast with error message
+    if (!user.data) {
+      return toast({
+        text: user.error?.message || '',
+        status: 'error',
+      })
+    }
 
     const authenticatedUserCookiePayload: UserCookiePayload = {
       userId: user.data.userId,

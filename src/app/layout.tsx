@@ -2,6 +2,9 @@ import React from 'react'
 
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
+
+import { SonnerAdapter } from '@/infra/toast'
+
 import './globals.css'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -20,12 +23,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { toaster } = new SonnerAdapter()
+
   return (
     <html lang="en">
       <body
         className={`${plusJakartaSans.className} ${plusJakartaSans.variable} antialiased`}
       >
         {children}
+
+        {toaster()}
       </body>
     </html>
   )
