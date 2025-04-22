@@ -1,7 +1,5 @@
-import { Locale } from '@/domain/models'
-
 export interface Format {
-  format(date: Date, pattern: string, locale: Locale): Format.Output
+  format(date: Date, pattern: string): Format.Output
 }
 
 export namespace Format {
