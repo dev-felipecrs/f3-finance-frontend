@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { MenuSection as MenuSectionProps } from '@/constants'
+import { MenuSection as MenuSectionProps } from '@/presentation/constants'
 
 import { LinkItem } from './LinkItem'
 

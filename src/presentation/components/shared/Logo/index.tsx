@@ -19,7 +19,7 @@ export function Logo({ size = 'lg' }: LogoProps) {
   return (
     <div className="flex items-center">
       <Image
-        src="./shared/logo.svg"
+        src="/shared/logo.svg"
         width={imageSize[size]}
         height={imageSize[size]}
         alt="F3 Logo"

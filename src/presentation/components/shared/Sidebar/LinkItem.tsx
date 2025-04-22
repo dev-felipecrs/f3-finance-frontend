@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 import { condicionalStyles } from '@/presentation/helpers'
-import { LinkItem as LinkItemProps } from '@/constants'
+import { LinkItem as LinkItemProps } from '@/presentation/constants'
 
 export function LinkItem({ href, title, icon: Icon }: LinkItemProps) {
   const pathname = usePathname()
