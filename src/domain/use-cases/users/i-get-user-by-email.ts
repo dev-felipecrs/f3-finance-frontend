@@ -10,7 +10,7 @@ export interface IGetUserByEmailUseCase {
 export namespace IGetUserByEmailUseCase {
   export type Input = {
     email: string
-    accessToken?: string
+    Authorization?: string
   }
 
   export type Output = User

@@ -3,10 +3,9 @@ import { ISignInUseCase } from '@/domain/use-cases/auth'
 import { HttpClient } from '@/data/protocols/http'
 
 type SignUpReturn = {
-  user_id: string
-  access_token: string
-  refresh_token: string
-  expires_in: number
+  accessToken: string
+  refreshToken: string
+  expiresIn: number
 }
 
 @UseCaseErrorHandlerDecorator()
@@ -16,7 +15,6 @@ export class SignInUseCase implements ISignInUseCase {
   async execute(
     input: ISignInUseCase.Input,
   ): Promise<HttpClient.Output<ISignInUseCase.Output>> {
-    console.log(process.env)
     const response = await this.http.on<SignUpReturn>({
       url: process.env.BASE_API_URL + '/auth/sign-in',
       method: 'POST',
@@ -36,9 +34,9 @@ export class SignInUseCase implements ISignInUseCase {
     return {
       status: response.status,
       data: {
-        accessToken: response.data.access_token,
-        refreshToken: response.data.refresh_token,
-        expiresIn: response.data.expires_in,
+        accessToken: response.data.accessToken,
+        refreshToken: response.data.refreshToken,
+        expiresIn: response.data.expiresIn,
       },
     }
   }

@@ -12,6 +12,7 @@ import { Button, Input } from '@/presentation/components/shared'
 import { revalidatePage, setCookie } from '@/presentation/actions'
 import { makeGetUserByEmailUseCase } from '@/infra/factories/users'
 import { makeSignInUseCase } from '@/infra/factories/auth'
+import { DateFnsAdapter } from '@/infra/date'
 import { UserCookiePayload } from '@/domain/models'
 
 const LoginSchema = z.object({
@@ -23,6 +24,8 @@ const LoginSchema = z.object({
 
 export function Form() {
   const router = useRouter()
+
+  const { add } = new DateFnsAdapter()
 
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof LoginSchema>
@@ -47,15 +50,17 @@ export function Form() {
         name: AUTHENTICATED_USER_COOKIE_KEY,
         value: data,
         options: {
-          expires: 1000 * 60 * 60 * 24 * 30, // 30 days
+          expires: add(new Date(), { months: 1 }),
         },
       })
     }
 
+    console.log(sign.data)
+
     await setAuthenticatedUserCookie({
       accessToken: sign.data.accessToken,
       refreshToken: sign.data.refreshToken,
-      expiredAt: new Date('2026-01-01'), // TODO: add expiredAt
+      expiredAt: add(new Date(), { seconds: sign.data.expiresIn }),
     })
 
     const getUserByEmailUseCase = makeGetUserByEmailUseCase()
@@ -70,7 +75,7 @@ export function Form() {
       roles: user.data.roles,
       accessToken: sign.data.accessToken,
       refreshToken: sign.data.refreshToken,
-      expiredAt: new Date('2026-01-01'), // TODO: add expiredAt
+      expiredAt: add(new Date(), { seconds: sign.data.expiresIn }),
     }
 
     await setAuthenticatedUserCookie(authenticatedUserCookiePayload)

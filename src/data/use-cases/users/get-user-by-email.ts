@@ -27,7 +27,7 @@ export class GetUserByEmailUseCase implements IGetUserByEmailUseCase {
       url: process.env.BASE_API_URL + `/users/by-email/${input.email}`,
       method: 'GET',
       headers: {
-        Authorization: input.accessToken,
+        Authorization: input.Authorization,
       },
     })
 
