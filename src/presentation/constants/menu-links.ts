@@ -30,7 +30,7 @@ export const menuLinks: MenuSection[] = [
       {
         icon: UserCircle,
         title: 'Usuários',
-        href: '/',
+        href: '/app/admin/users',
       },
     ],
   },
