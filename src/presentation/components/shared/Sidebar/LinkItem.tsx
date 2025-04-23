@@ -6,15 +6,20 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 import { condicionalStyles } from '@/presentation/helpers'
-import { LinkItem as LinkItemProps } from '@/presentation/constants'
+import { LinkItem as LinkItemType } from '@/presentation/constants'
 
-export function LinkItem({ href, title, icon: Icon }: LinkItemProps) {
+type LinkItemProps = Pick<LinkItemType, 'href' | 'icon' | 'title'> & {
+  onClick?: () => void
+}
+
+export function LinkItem({ href, title, icon: Icon, onClick }: LinkItemProps) {
   const pathname = usePathname()
   const isActive = pathname === href
 
   return (
     <Link
       href={href}
+      onClick={onClick}
       aria-current={isActive ? 'page' : undefined}
       className={condicionalStyles(
         'group flex w-full items-center gap-5 p-5 text-gray-400 hover:text-gray-500',

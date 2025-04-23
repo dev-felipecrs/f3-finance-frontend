@@ -10,7 +10,7 @@ import { Logo } from '../Logo'
 
 export function Sidebar() {
   return (
-    <aside className="border-light-mode h-full w-82 border-r border-solid bg-white p-6">
+    <aside className="border-light-mode hidden h-full w-82 border-r border-solid bg-white p-6 lg:block">
       <Logo size="md" />
 
       <div className="mt-15">
