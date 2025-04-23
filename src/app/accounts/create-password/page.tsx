@@ -1,7 +1,13 @@
 import React from 'react'
 
+import { Metadata } from 'next'
+
 import { Logo } from '@/presentation/components/shared'
 import { Form } from '@/presentation/components/pages/accounts/create-password'
+
+export const metadata: Metadata = {
+  title: 'Criar Senha | F3Finance',
+}
 
 type CreatePasswordPageParams = {
   searchParams: Promise<{
