@@ -7,13 +7,20 @@ export default function LoginPage() {
   return (
     <>
       <header className="flex items-center justify-center">
-        <Logo />
+        <div className="block md:hidden">
+          <Logo size="sm" />
+        </div>
+        <div className="hidden md:block">
+          <Logo size="lg" />
+        </div>
       </header>
 
-      <div className="mt-10 flex flex-col gap-5">
-        <h1 className="text-4xl leading-14 font-bold">Bem-vindo de volta!</h1>
-        <p className="text-lg text-gray-400">
-          Estamos prontos para te ajudar a gerenciar suas finanças. Faça login e
+      <div className="mt-4 flex flex-col gap-2 md:mt-10 md:gap-5">
+        <h1 className="text-2xl leading-14 font-bold md:text-4xl">
+          Bem-vindo de volta!
+        </h1>
+        <p className="text-sm text-gray-400 md:text-lg">
+          Estamos prontos para te ajudar a organizar suas finanças. Faça login e
           vamos lá!
         </p>
       </div>
