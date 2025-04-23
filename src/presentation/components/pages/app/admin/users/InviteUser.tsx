@@ -53,8 +53,8 @@ export function InviteUser() {
   return (
     <Dialog.Root open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <Dialog.Trigger>
-        <Button.Root>
-          <Plus size={16} className="text-white" />
+        <Button.Root className="">
+          <Plus className="h-3 w-3 text-white md:h-4 md:w-4" />
           <Button.Text>Adicionar</Button.Text>
         </Button.Root>
       </Dialog.Trigger>

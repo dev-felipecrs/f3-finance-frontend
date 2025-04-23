@@ -14,7 +14,7 @@ export const TableCell = React.forwardRef<
       {...props}
       ref={ref}
       className={twMerge(
-        'p-2 text-left text-sm font-medium text-gray-500',
+        'p-2 text-left text-xs font-medium text-gray-500 md:text-sm',
         props.className,
       )}
     />
