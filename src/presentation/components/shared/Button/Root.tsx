@@ -16,7 +16,7 @@ export const ButtonRoot = React.forwardRef<HTMLButtonElement, ButtonRootProps>(
         ref={ref}
         type={props.type || 'button'}
         className={twMerge(
-          'bg-primary-500 hover:bg-primary-600 flex h-[3.75rem] cursor-pointer items-center justify-center gap-2 rounded-sm px-6 py-3 transition disabled:brightness-75',
+          'bg-primary-500 hover:bg-primary-600 flex h-9 cursor-pointer items-center justify-center gap-1 rounded-sm px-5 py-2.5 transition disabled:brightness-75 md:h-[3.75rem] md:gap-2 md:px-6 md:py-3',
           props.className,
         )}
       >

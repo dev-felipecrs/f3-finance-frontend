@@ -1,4 +1,5 @@
 export * from './Button'
+export * from './Dialog'
 export * from './Header'
 export * from './Input'
 export * from './Logo'
