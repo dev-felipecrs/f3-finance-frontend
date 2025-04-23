@@ -49,4 +49,27 @@
   --color-warning-300: #ffdc66;
   --color-warning-400: #ffcd3f;
   --color-warning-500: #ffb600;
+
+  --animate-fade-in-overlay: fade-in-overlay 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-fade-in-content: fade-in-content 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  @keyframes fade-in-overlay-content {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -48%) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  @keyframes fade-in-overlay {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 }

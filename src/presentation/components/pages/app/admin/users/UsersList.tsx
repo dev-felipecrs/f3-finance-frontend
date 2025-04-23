@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { Plus, Trash } from '@phosphor-icons/react/dist/ssr'
+import { Trash } from '@phosphor-icons/react/dist/ssr'
 
-import { Button, Table } from '@/presentation/components/shared'
+import { Table } from '@/presentation/components/shared'
+
+import { InviteUser } from './InviteUser'
 
 export function UsersList() {
   return (
@@ -12,10 +14,7 @@ export function UsersList() {
           Usuários
         </strong>
 
-        <Button.Root>
-          <Plus size={16} className="text-white" />
-          <Button.Text>Adicionar</Button.Text>
-        </Button.Root>
+        <InviteUser />
       </header>
 
       <Table.Root>
@@ -26,7 +25,7 @@ export function UsersList() {
             <Table.Head className="text-right" />
           </tr>
         </thead>
-        <tbody>
+        <tbody className="bg-myCustomColor">
           {Array.from({ length: 2 }).map((_, index) => (
             <Table.Row key={index}>
               <Table.Cell className="w-64">exemplo@gmail.com</Table.Cell>

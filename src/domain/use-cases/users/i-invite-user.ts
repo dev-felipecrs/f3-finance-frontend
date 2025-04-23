@@ -10,7 +10,7 @@ export interface IInviteUserUseCase {
 export namespace IInviteUserUseCase {
   export type Input = {
     email: string
-    roles: UserRole
+    roles: UserRole[]
     Authorization?: string
   }
 
