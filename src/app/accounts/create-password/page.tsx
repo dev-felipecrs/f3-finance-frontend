@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 
 type CreatePasswordPageParams = {
   searchParams: Promise<{
-    auth: string
+    token: string
   }>
 }
 
 export default async function CreatePasswordPage({
   searchParams,
 }: CreatePasswordPageParams) {
-  const { auth } = await searchParams
+  const { token } = await searchParams
 
   return (
     <>
@@ -33,7 +33,7 @@ export default async function CreatePasswordPage({
         </p>
       </div>
 
-      <Form authToken={auth} />
+      <Form authToken={token} />
     </>
   )
 }

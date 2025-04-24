@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
+import { useQueryClient } from '@tanstack/react-query'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -18,6 +19,7 @@ const InviteUserSchema = z.object({
 
 export function InviteUser() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
+  const queryClient = useQueryClient()
 
   const { toast } = new SonnerAdapter()
 
@@ -45,6 +47,10 @@ export function InviteUser() {
     toast({
       text: 'Usuário convidado',
       status: 'success',
+    })
+
+    await queryClient.refetchQueries({
+      queryKey: ['users'],
     })
 
     setDialogIsOpen(false)
