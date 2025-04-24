@@ -1,53 +1,46 @@
-'use client'
-import React from 'react'
+"use client";
+import React from "react";
 
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-
-import { AUTHENTICATED_USER_COOKIE_KEY } from '@/presentation/constants'
-import { Button, Input } from '@/presentation/components/shared'
-import { revalidatePage, setCookie } from '@/presentation/actions'
-import { SonnerAdapter } from '@/infra/toast'
-import { makeGetUserByEmailUseCase } from '@/infra/factories/users'
-import { makeSignInUseCase } from '@/infra/factories/auth'
-import { DateFnsAdapter } from '@/infra/date'
-import { UserCookiePayload } from '@/domain/models'
-import { InputDescription } from '@/presentation/components/shared/Input/Description'
-import { InputPasswordStrength } from '@/presentation/components/shared/Input/PasswordStrength'
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
+import { Button, Input } from "@/presentation/components/shared";
+import { revalidatePage } from "@/presentation/actions/revalidate-page";
 
 const LoginSchema = z.object({
-  email: z.string().email({
-    message: 'E-mail inválido',
-  }),
   password: z.string(),
-  confirmPassword: z.string()
-})
-
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  path: ['confirmPassword'],
+  message: 'As senhas precisam ser iguais'
+});
 export function Form() {
-  const router = useRouter()
-  const { add } = new DateFnsAdapter()
-  const { toast } = new SonnerAdapter()
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const { handleSubmit, register, formState, watch } = useForm<
     z.infer<typeof LoginSchema>
   >({
     resolver: zodResolver(LoginSchema),
-  })
-
-  const passwordValue = watch('password')
-  const confirmPasswordValue = watch('confirmPassword')
+  });
+  const passwordValue = watch("password");
+  const confirmPasswordValue = watch("confirmPassword");
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    if (passwordValue) {
-      
-    }
+    await fetch("auth/user/reset-password", {
+      method: "POST",
+      body: JSON.stringify({
+        token: token,
+        password: data.password,
+      }),
+    });
+    await revalidatePage("/app");
 
-    await revalidatePage('/app')
-
-    router.push('/app')
-  }
+    router.push("/app");
+  };
 
   return (
     <form
@@ -61,10 +54,13 @@ export function Form() {
           id="password"
           type="password"
           placeholder="SuaSenha#123"
-          {...register('password')}
+          {...register("password")}
         />
-        <InputDescription>Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número e caracter especial</InputDescription>
-        <InputPasswordStrength value={passwordValue}></InputPasswordStrength>
+        <Input.Description>
+          Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número e
+          caracter especial
+        </Input.Description>
+        <Input.PasswordStrength value={passwordValue}></Input.PasswordStrength>
 
         {formState.errors.password && (
           <Input.ErrorMessage>
@@ -80,11 +76,12 @@ export function Form() {
           id="confirmPassword"
           type="password"
           placeholder="SuaSenha#123"
+          {...register("confirmPassword")}
         />
 
-        {formState.errors.password && (
+        {formState.errors.confirmPassword && (
           <Input.ErrorMessage>
-            {formState.errors.password.message}
+            {formState.errors.confirmPassword.message}
           </Input.ErrorMessage>
         )}
       </Input.Root>
@@ -93,5 +90,5 @@ export function Form() {
         <Button.Text>Entrar</Button.Text>
       </Button.Root>
     </form>
-  )
+  );
 }
