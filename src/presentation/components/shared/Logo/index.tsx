@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import { condicionalStyles } from '@/presentation/helpers'
 
-type LogoSize = 'lg' | 'md'
+type LogoSize = 'lg' | 'md' | 'sm'
 
 interface LogoProps {
   size?: LogoSize
@@ -14,6 +14,7 @@ export function Logo({ size = 'lg' }: LogoProps) {
   const imageSize: Record<LogoSize, number> = {
     lg: 50,
     md: 40,
+    sm: 40,
   }
 
   return (
@@ -30,7 +31,7 @@ export function Logo({ size = 'lg' }: LogoProps) {
           'text-primary-500 ml-4 font-bold tracking-tighter',
           {
             'text-[3rem]': size === 'lg',
-            'text-[2rem]': size === 'md',
+            'text-[2rem]': ['md', 'sm'].includes(size),
           },
         )}
       >

@@ -53,7 +53,7 @@ export function InviteUser() {
   return (
     <Dialog.Root open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <Dialog.Trigger>
-        <Button.Root className="">
+        <Button.Root className="h-9 py-2.5 md:h-14 md:py-3">
           <Plus className="h-3 w-3 text-white md:h-4 md:w-4" />
           <Button.Text>Adicionar</Button.Text>
         </Button.Root>
