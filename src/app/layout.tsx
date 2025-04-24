@@ -3,6 +3,7 @@ import React from 'react'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import type { Metadata } from 'next'
 
+import { Provider } from '@/presentation/providers'
 import { SonnerAdapter } from '@/infra/toast'
 
 import './globals.css'
@@ -30,7 +31,7 @@ export default function RootLayout({
       <body
         className={`${plusJakartaSans.className} ${plusJakartaSans.variable} antialiased`}
       >
-        {children}
+        <Provider>{children}</Provider>
 
         {toaster()}
       </body>
