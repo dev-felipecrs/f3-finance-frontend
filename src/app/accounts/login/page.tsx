@@ -1,7 +1,13 @@
 import React from 'react'
 
+import { Metadata } from 'next'
+
 import { Logo } from '@/presentation/components/shared'
 import { Form } from '@/presentation/components/pages/accounts/login'
+
+export const metadata: Metadata = {
+  title: 'Login',
+}
 
 export default function LoginPage() {
   return (
