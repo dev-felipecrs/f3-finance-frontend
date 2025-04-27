@@ -25,7 +25,7 @@ export default function LoginPage() {
         <h1 className="text-2xl leading-14 font-bold md:text-4xl">
           Bem-vindo de volta!
         </h1>
-        <p className="text-sm text-gray-400 md:text-lg">
+        <p className="text-sm tracking-[-0.02em] text-gray-400 md:text-lg">
           Estamos prontos para te ajudar a organizar suas finanças. Faça login e
           vamos lá!
         </p>

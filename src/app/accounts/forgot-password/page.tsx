@@ -3,19 +3,13 @@ import React from 'react'
 import { Metadata } from 'next'
 
 import { Logo } from '@/presentation/components/shared'
-import { Form } from '@/presentation/components/pages/accounts/reset-password'
+import { Form } from '@/presentation/components/pages/accounts/forgot-password'
 
 export const metadata: Metadata = {
-  title: 'Mudar Senha',
+  title: 'Esqueci minha senha',
 }
 
-interface LoginPageProps {
-  searchParams: {
-    token: string
-  }
-}
-
-export default function LoginPage({ searchParams }: LoginPageProps) {
+export default function ForgotPasswordPage() {
   return (
     <>
       <header className="flex items-center justify-center">
@@ -29,15 +23,16 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
 
       <div className="mt-4 flex flex-col gap-2 md:mt-10 md:gap-5">
         <h1 className="text-2xl leading-14 font-bold md:text-4xl">
-          Redefinir senha
+          Esqueceu sua senha?
         </h1>
 
         <p className="text-sm tracking-[-0.02em] text-gray-400 md:text-lg">
-          Quase lá! Crie uma nova senha para recuperar o acesso à sua conta.
+          Sem problemas! Digite seu e-mail e enviaremos um link para você criar
+          uma nova senha.
         </p>
       </div>
 
-      <Form token={searchParams.token} />
+      <Form />
     </>
   )
 }

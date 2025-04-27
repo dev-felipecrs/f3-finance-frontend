@@ -28,10 +28,10 @@ const LoginSchema = z
   })
 
 type FormProps = {
-  authToken: string
+  token: string
 }
 
-export function Form({ authToken }: FormProps) {
+export function Form({ token }: FormProps) {
   const router = useRouter()
 
   const { toast } = new SonnerAdapter()
@@ -48,7 +48,7 @@ export function Form({ authToken }: FormProps) {
 
     const resetPassword = await resetPasswordUseCase.execute({
       password: data.password,
-      auth_token: authToken,
+      token,
     })
 
     if (!resetPassword.data) {
