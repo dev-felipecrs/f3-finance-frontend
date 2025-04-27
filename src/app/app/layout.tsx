@@ -1,14 +1,33 @@
 import React from 'react'
 
-import { Header, Sidebar } from '@/presentation/components/shared'
+import { notFound } from 'next/navigation'
 
-export default function LayoutApp({ children }: React.PropsWithChildren) {
+import {
+  ADMIN_MENU_SECTIONS,
+  AUTHENTICATED_USER_COOKIE_KEY,
+  USER_MENU_SECTIONS,
+} from '@/presentation/constants'
+import { Header, Sidebar } from '@/presentation/components/shared'
+import { getCookie } from '@/presentation/actions'
+import { UserCookiePayload } from '@/domain/models'
+
+export default async function LayoutApp({ children }: React.PropsWithChildren) {
+  const { value: user } = await getCookie<UserCookiePayload>(
+    AUTHENTICATED_USER_COOKIE_KEY,
+  )
+
+  if (!user) notFound()
+
+  const menuSections = user.roles.includes('admin')
+    ? ADMIN_MENU_SECTIONS
+    : USER_MENU_SECTIONS
+
   return (
     <main className="bg-light-mode flex h-screen w-screen">
-      <Sidebar />
+      <Sidebar menuSections={menuSections} />
 
       <div className="flex-1">
-        <Header />
+        <Header menuSections={menuSections} />
 
         <div className="p-6">{children}</div>
       </div>

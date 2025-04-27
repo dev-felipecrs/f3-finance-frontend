@@ -1,9 +1,8 @@
-import { ElementType } from 'react'
-
-import { SquaresFour, UserCircle } from '@phosphor-icons/react'
+'use client'
+import { Icon, SquaresFour, UserCircle } from '@phosphor-icons/react'
 
 export type LinkItem = {
-  icon: ElementType
+  icon: Icon
   title: string
   href: string
 }
@@ -13,7 +12,7 @@ export type MenuSection = {
   links: LinkItem[]
 }
 
-export const menuLinks: MenuSection[] = [
+export const USER_MENU_SECTIONS: MenuSection[] = [
   {
     title: 'Principal',
     links: [
@@ -24,6 +23,10 @@ export const menuLinks: MenuSection[] = [
       },
     ],
   },
+]
+
+export const ADMIN_MENU_SECTIONS: MenuSection[] = [
+  ...USER_MENU_SECTIONS,
   {
     title: 'Administrador',
     links: [

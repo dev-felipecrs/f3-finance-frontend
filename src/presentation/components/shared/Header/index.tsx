@@ -5,10 +5,16 @@ import Link from 'next/link'
 import { User } from '@phosphor-icons/react/dist/ssr'
 import { List } from '@phosphor-icons/react'
 
+import { MenuSection } from '@/presentation/constants'
+
 import { MobileSidebar } from '../Sidebar'
 import { Logo } from '../Logo'
 
-export function Header() {
+interface HeaderProps {
+  menuSections: MenuSection[]
+}
+
+export function Header({ menuSections }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -18,7 +24,11 @@ export function Header() {
           <List size={34} />
         </button>
 
-        <MobileSidebar isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
+        <MobileSidebar
+          menuSections={menuSections}
+          isOpen={menuOpen}
+          onClose={() => setMenuOpen(false)}
+        />
       </div>
 
       <div className="lg:hidden">
