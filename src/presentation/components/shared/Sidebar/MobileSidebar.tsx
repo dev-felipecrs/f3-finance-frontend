@@ -4,16 +4,21 @@ import React, { useEffect, useState } from 'react'
 import { ArrowRight } from '@phosphor-icons/react'
 
 import { condicionalStyles } from '@/presentation/helpers'
-import { menuLinks } from '@/presentation/constants'
+import { MenuSection as IMenuSection } from '@/presentation/constants'
 
 import { MenuSection } from './MenuSection'
 
 type MobileSidebarProps = {
+  menuSections: IMenuSection[]
   isOpen: boolean
   onClose: () => void
 }
 
-export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
+export function MobileSidebar({
+  menuSections,
+  isOpen,
+  onClose,
+}: MobileSidebarProps) {
   const [isMounted, setIsMounted] = useState(false)
   const [shouldAnimate, setShouldAnimate] = useState(false)
 
@@ -65,11 +70,11 @@ export function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
         </button>
 
         <div className="mt-6">
-          {menuLinks.map((item) => (
+          {menuSections.map((section) => (
             <MenuSection
-              key={item.title}
-              title={item.title}
-              links={item.links}
+              key={section.title}
+              title={section.title}
+              links={section.links}
               onNavigate={onClose}
             />
           ))}

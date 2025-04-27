@@ -1,2 +1,2 @@
 export * from './cookies'
-export * from './menu-links'
+export * from './menu-sections'

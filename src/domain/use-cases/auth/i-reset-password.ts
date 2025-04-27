@@ -9,11 +9,9 @@ export interface IResetPasswordUseCase {
 
 export namespace IResetPasswordUseCase {
   export type Input = {
-    auth_token: string
+    token: string
     password: string
   }
 
-  export type Output = Omit<User, 'password'> & {
-    token: string
-  }
+  export type Output = User
 }

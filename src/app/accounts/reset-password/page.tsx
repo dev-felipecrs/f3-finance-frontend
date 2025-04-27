@@ -3,13 +3,21 @@ import React from 'react'
 import { Metadata } from 'next'
 
 import { Logo } from '@/presentation/components/shared'
-import { Form } from '@/presentation/components/pages/accounts/login'
+import { Form } from '@/presentation/components/pages/accounts/reset-password'
 
 export const metadata: Metadata = {
-  title: 'Login',
+  title: 'Mudar Senha',
 }
 
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams: Promise<{
+    token: string
+  }>
+}
+
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { token } = await searchParams
+
   return (
     <>
       <header className="flex items-center justify-center">
@@ -23,15 +31,15 @@ export default function LoginPage() {
 
       <div className="mt-4 flex flex-col gap-2 md:mt-10 md:gap-5">
         <h1 className="text-2xl leading-14 font-bold md:text-4xl">
-          Bem-vindo de volta!
+          Redefinir senha
         </h1>
+
         <p className="text-sm tracking-[-0.02em] text-gray-400 md:text-lg">
-          Estamos prontos para te ajudar a organizar suas finanças. Faça login e
-          vamos lá!
+          Quase lá! Crie uma nova senha para recuperar o acesso à sua conta.
         </p>
       </div>
 
-      <Form />
+      <Form token={token} />
     </>
   )
 }

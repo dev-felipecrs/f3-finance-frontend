@@ -6,10 +6,10 @@ import { Logo } from '@/presentation/components/shared'
 import { Form } from '@/presentation/components/pages/accounts/create-password'
 
 export const metadata: Metadata = {
-  title: 'Criar Senha | F3Finance',
+  title: 'Criar Senha',
 }
 
-type CreatePasswordPageParams = {
+interface CreatePasswordPageProps {
   searchParams: Promise<{
     token: string
   }>
@@ -17,7 +17,7 @@ type CreatePasswordPageParams = {
 
 export default async function CreatePasswordPage({
   searchParams,
-}: CreatePasswordPageParams) {
+}: CreatePasswordPageProps) {
   const { token } = await searchParams
 
   return (
@@ -28,12 +28,13 @@ export default async function CreatePasswordPage({
 
       <div className="mt-10 flex flex-col gap-5">
         <h1 className="text-4xl leading-14 font-bold">Crie sua senha</h1>
-        <p className="text-lg text-gray-400">
+
+        <p className="text-lg tracking-[-0.02em] text-gray-400">
           Quase lá! Crie uma senha segura e finalize seu acesso ao sistema
         </p>
       </div>
 
-      <Form authToken={token} />
+      <Form token={token} />
     </>
   )
 }

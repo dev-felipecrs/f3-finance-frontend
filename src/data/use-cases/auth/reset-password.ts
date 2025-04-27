@@ -23,7 +23,7 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
       url: process.env.BASE_API_URL + '/auth/reset-password',
       method: 'POST',
       body: {
-        token: input.auth_token,
+        token: input.token,
         password: input.password,
       },
     })
@@ -39,7 +39,6 @@ export class ResetPasswordUseCase implements IResetPasswordUseCase {
       status: response.status,
       data: {
         userId: response.data.user_id,
-        token: response.data.auth_token,
         email: response.data.email,
         roles: response.data.roles,
         updatedAt: response.data.updated_at,
