@@ -10,7 +10,10 @@ export const ButtonText = React.forwardRef<HTMLSpanElement, ButtonTextProps>(
       <span
         {...props}
         ref={ref}
-        className={twMerge('text-base font-bold text-white', props.className)}
+        className={twMerge(
+          'text-sm font-bold text-white lg:text-base',
+          props.className,
+        )}
       />
     )
   },
