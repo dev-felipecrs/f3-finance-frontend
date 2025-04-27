@@ -1,73 +1,98 @@
-"use client";
-import React from "react";
+'use client'
+import React from 'react'
 
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
-import { Button, Input } from "@/presentation/components/shared";
-import { revalidatePage } from "@/presentation/actions/revalidate-page";
+import { z } from 'zod'
+import { Controller, useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-const LoginSchema = z.object({
-  password: z.string(),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  path: ['confirmPassword'],
-  message: 'As senhas precisam ser iguais'
-});
-export function Form() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+import { Button, Input } from '@/presentation/components/shared'
+import { revalidatePage } from '@/presentation/actions/revalidate-page'
+import { SonnerAdapter } from '@/infra/toast'
+import { makeResetPasswordUseCase } from '@/infra/factories/auth'
 
-  const { handleSubmit, register, formState, watch } = useForm<
+const LoginSchema = z
+  .object({
+    password: z.string(),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ['confirmPassword'],
+    message: 'As senhas precisam ser iguais',
+  })
+
+interface FormProps {
+  token: string
+}
+
+export function Form({ token }: FormProps) {
+  const router = useRouter()
+
+  const { toast } = new SonnerAdapter()
+
+  const { control, handleSubmit, register, formState } = useForm<
     z.infer<typeof LoginSchema>
   >({
     resolver: zodResolver(LoginSchema),
-  });
-  const passwordValue = watch("password");
-  const confirmPasswordValue = watch("confirmPassword");
+  })
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
-    await fetch("auth/user/reset-password", {
-      method: "POST",
-      body: JSON.stringify({
-        token: token,
-        password: data.password,
-      }),
-    });
-    await revalidatePage("/app");
+    const resetPasswordUseCase = makeResetPasswordUseCase()
+    const response = await resetPasswordUseCase.execute({
+      password: data.password,
+      token,
+    })
 
-    router.push("/app");
-  };
+    if (!response.data) {
+      return toast({
+        text: response.error?.message || '',
+        status: 'error',
+      })
+    }
+
+    toast({
+      text: 'Senha alterado com êxito',
+      status: 'success',
+    })
+
+    await revalidatePage('/accounts/login')
+
+    router.push('/accounts/login')
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="mt-8 flex flex-col gap-8"
     >
-      <Input.Root>
-        <Input.Label htmlFor="password">Senha</Input.Label>
+      <Controller
+        control={control}
+        name="password"
+        defaultValue=""
+        render={({ field }) => (
+          <Input.Root>
+            <Input.Label htmlFor="password">Senha</Input.Label>
 
-        <Input.Input
-          id="password"
-          type="password"
-          placeholder="SuaSenha#123"
-          {...register("password")}
-        />
-        <Input.Description>
-          Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número e
-          caracter especial
-        </Input.Description>
-        <Input.PasswordStrength value={passwordValue}></Input.PasswordStrength>
+            <Input.Input
+              id="password"
+              type="password"
+              placeholder="SuaSenha#123"
+              {...field}
+            />
+            <Input.Description>
+              Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número
+              e caracter especial
+            </Input.Description>
+            <Input.PasswordStrength value={field.value} />
 
-        {formState.errors.password && (
-          <Input.ErrorMessage>
-            {formState.errors.password.message}
-          </Input.ErrorMessage>
+            {formState.errors.password && (
+              <Input.ErrorMessage>
+                {formState.errors.password.message}
+              </Input.ErrorMessage>
+            )}
+          </Input.Root>
         )}
-      </Input.Root>
+      />
 
       <Input.Root>
         <Input.Label htmlFor="password">Confirme sua senha</Input.Label>
@@ -76,7 +101,7 @@ export function Form() {
           id="confirmPassword"
           type="password"
           placeholder="SuaSenha#123"
-          {...register("confirmPassword")}
+          {...register('confirmPassword')}
         />
 
         {formState.errors.confirmPassword && (
@@ -90,5 +115,5 @@ export function Form() {
         <Button.Text>Entrar</Button.Text>
       </Button.Root>
     </form>
-  );
+  )
 }

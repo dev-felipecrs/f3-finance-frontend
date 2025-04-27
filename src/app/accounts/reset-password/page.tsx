@@ -3,21 +3,34 @@ import React from 'react'
 import { Logo } from '@/presentation/components/shared'
 import { Form } from '@/presentation/components/pages/accounts/reset-password'
 
-export default function LoginPage() {
+interface LoginPageProps {
+  searchParams: {
+    token: string
+  }
+}
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <>
       <header className="flex items-center justify-center">
-        <Logo />
+        <div className="block md:hidden">
+          <Logo size="sm" />
+        </div>
+        <div className="hidden md:block">
+          <Logo size="lg" />
+        </div>
       </header>
 
-      <div className="mt-10 flex flex-col gap-5">
-        <h1 className="text-4xl leading-14 font-bold">Bem-vindo de volta!</h1>
-        <p className="text-lg text-gray-400">
-        Quase lá! Crie uma nova senha para recuperar o acesso à sua conta.
+      <div className="mt-4 flex flex-col gap-2 md:mt-10 md:gap-5">
+        <h1 className="text-2xl leading-14 font-bold md:text-4xl">
+          Redefinir senha
+        </h1>
+        <p className="text-sm text-gray-400 md:text-lg">
+          Quase lá! Crie uma nova senha para recuperar o acesso à sua conta.
         </p>
       </div>
 
-      <Form />
+      <Form token={searchParams.token} />
     </>
   )
 }

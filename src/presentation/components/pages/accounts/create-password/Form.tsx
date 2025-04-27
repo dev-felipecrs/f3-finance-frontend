@@ -2,7 +2,7 @@
 import React from 'react'
 
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -37,12 +37,11 @@ export function Form({ authToken }: FormProps) {
   const { toast } = new SonnerAdapter()
   const { add } = new DateFnsAdapter()
 
-  const { handleSubmit, register, formState, watch } = useForm<
+  const { control, handleSubmit, register, formState } = useForm<
     z.infer<typeof LoginSchema>
   >({
     resolver: zodResolver(LoginSchema),
   })
-  const passwordValue = watch('password')
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     const resetPasswordUseCase = makeResetPasswordUseCase()
@@ -115,29 +114,34 @@ export function Form({ authToken }: FormProps) {
       onSubmit={handleSubmit(onSubmit)}
       className="mt-8 flex flex-col gap-8"
     >
-      <Input.Root>
-        <Input.Label htmlFor="password">Senha</Input.Label>
+      <Controller
+        control={control}
+        name="password"
+        defaultValue=""
+        render={({ field }) => (
+          <Input.Root>
+            <Input.Label htmlFor="password">Senha</Input.Label>
 
-        <Input.Input
-          id="email"
-          type="password"
-          placeholder="SuaSenha#123"
-          {...register('password')}
-        />
+            <Input.Input
+              id="password"
+              type="password"
+              placeholder="SuaSenha#123"
+              {...field}
+            />
+            <Input.Description>
+              Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número
+              e caracter especial
+            </Input.Description>
+            <Input.PasswordStrength value={field.value} />
 
-        <Input.Description>
-          Mínimo de 8 caracteres, com uma letra maiúscula, minúscula, número e
-          caracter especial
-        </Input.Description>
-
-        <Input.PasswordStrength value={passwordValue} />
-
-        {formState.errors.password && (
-          <Input.ErrorMessage>
-            {formState.errors.password.message}
-          </Input.ErrorMessage>
+            {formState.errors.password && (
+              <Input.ErrorMessage>
+                {formState.errors.password.message}
+              </Input.ErrorMessage>
+            )}
+          </Input.Root>
         )}
-      </Input.Root>
+      />
 
       <Input.Root>
         <Input.Label htmlFor="confirm_password">Confirme sua senha</Input.Label>
