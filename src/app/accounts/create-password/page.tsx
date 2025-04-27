@@ -9,16 +9,16 @@ export const metadata: Metadata = {
   title: 'Criar Senha',
 }
 
-type CreatePasswordPageParams = {
-  searchParams: {
+interface CreatePasswordPageProps {
+  searchParams: Promise<{
     token: string
-  }
+  }>
 }
 
 export default async function CreatePasswordPage({
   searchParams,
-}: CreatePasswordPageParams) {
-  const { token } = searchParams
+}: CreatePasswordPageProps) {
+  const { token } = await searchParams
 
   return (
     <>

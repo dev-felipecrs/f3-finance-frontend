@@ -10,12 +10,14 @@ export const metadata: Metadata = {
 }
 
 interface LoginPageProps {
-  searchParams: {
+  searchParams: Promise<{
     token: string
-  }
+  }>
 }
 
-export default function LoginPage({ searchParams }: LoginPageProps) {
+export default async function LoginPage({ searchParams }: LoginPageProps) {
+  const { token } = await searchParams
+
   return (
     <>
       <header className="flex items-center justify-center">
@@ -37,7 +39,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
         </p>
       </div>
 
-      <Form token={searchParams.token} />
+      <Form token={token} />
     </>
   )
 }
