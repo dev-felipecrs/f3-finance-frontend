@@ -1,6 +1,8 @@
 'use client'
 import React from 'react'
 
+import Link from 'next/link'
+
 import { MenuSection as IMenuSection } from '@/presentation/constants'
 
 import { MenuSection } from './MenuSection'
@@ -14,7 +16,9 @@ interface SidebarProps {
 export function Sidebar({ menuSections }: SidebarProps) {
   return (
     <aside className="border-light-mode hidden h-full w-82 border-r border-solid bg-white p-6 lg:block">
-      <Logo size="md" />
+      <Link href="/app">
+        <Logo size="md" />
+      </Link>
 
       <div className="mt-15">
         {menuSections.map((section) => (
