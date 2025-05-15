@@ -23,7 +23,7 @@ export default function AccountLayout({ children }: React.PropsWithChildren) {
         </div>
       </div>
 
-      <main className="my-auto flex items-start justify-center">
+      <main className="my-auto flex items-start justify-center pt-15">
         <section className="relative max-w-[calc(100dvw_-_1.5rem_*2)] bg-white px-8 py-4 shadow-[0px_5px_15px_rgba(76,57,47,0.1)] md:max-w-[31rem] md:px-12 md:py-10">
           <div className="absolute -top-[3rem] -left-[3rem] -z-10 hidden h-[14rem] w-[6.25rem] md:block">
             <Image
@@ -33,7 +33,7 @@ export default function AccountLayout({ children }: React.PropsWithChildren) {
             />
           </div>
 
-          {children}
+          <div>{children}</div>
 
           <div className="absolute -top-[2.75rem] -right-[2.75rem] -z-10 hidden h-[7.5rem] w-[7.5rem] md:block">
             <Image
@@ -45,7 +45,7 @@ export default function AccountLayout({ children }: React.PropsWithChildren) {
         </section>
       </main>
 
-      <footer className="mb-10 text-center text-sm text-gray-300">
+      <footer className="mt-36 mb-10 text-center text-sm text-gray-300">
         ©2025 F3 Solutions. All Rights Reserved.
       </footer>
     </div>
