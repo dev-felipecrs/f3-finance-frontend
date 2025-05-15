@@ -31,9 +31,9 @@ export function Form() {
       email: data.email,
     })
 
-    if (response.data !== null) {
+    if (response.error) {
       return toast({
-        text: response.error?.message || '',
+        text: response.error.message,
         status: 'error',
       })
     }
