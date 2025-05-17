@@ -52,24 +52,40 @@
 
   --animate-fade-in-overlay: fade-in-overlay 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-fade-in-content: fade-in-content 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  
+
   @keyframes fade-in-overlay-content {
     0% {
       opacity: 0;
       transform: translate(-50%, -48%) scale(0.96);
     }
+
     100% {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
     }
   }
-  
+
   @keyframes fade-in-overlay {
     0% {
       opacity: 0;
     }
+
     100% {
       opacity: 1;
     }
+  }
+}
+
+@layer base {
+  ::-webkit-scrollbar-track {
+    @apply w-1 bg-white
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1 bg-primary-400 rounded-xl
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply w-1 bg-primary-400 rounded-xl
   }
 }
