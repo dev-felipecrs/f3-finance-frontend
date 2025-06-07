@@ -1,5 +1,5 @@
 'use client'
-import { Icon, SquaresFour, UserCircle } from '@phosphor-icons/react'
+import { Bank, Icon, SquaresFour, UserCircle } from '@phosphor-icons/react'
 
 export type LinkItem = {
   icon: Icon
@@ -30,6 +30,11 @@ export const ADMIN_MENU_SECTIONS: MenuSection[] = [
   {
     title: 'Administrador',
     links: [
+      {
+        icon: Bank,
+        title: 'Contas Bancárias',
+        href: '/app/admin/bank-accounts',
+      },
       {
         icon: UserCircle,
         title: 'Usuários',
