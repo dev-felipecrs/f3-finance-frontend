@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 
-import { Metadata } from 'next'
+import crypto from 'node:crypto'
 
-import { BankAccounts } from '@/presentation/components/pages/app/admin/bank-accounts'
+import { BankAccountsList } from '@/presentation/components/pages/app/admin/bank-accounts'
 
-export const metadata: Metadata = {
-  title: 'Contas Bancárias',
+import BankAccountsLoadingPage from './loading'
+
+interface BankAccountsPageProps {
+  searchParams: Promise<{
+    page: number
+  }>
 }
 
-export default function BankAccountsPage() {
-  return <BankAccounts />
+export default async function BankAccountsPage({
+  searchParams,
+}: BankAccountsPageProps) {
+  const params = await searchParams
+  const page = Number(params.page ?? 1)
+
+  return (
+    <Suspense fallback={<BankAccountsLoadingPage />} key={crypto.randomUUID()}>
+      <BankAccountsList page={page} />
+    </Suspense>
+  )
 }

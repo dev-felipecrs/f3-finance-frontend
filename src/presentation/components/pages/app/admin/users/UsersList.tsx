@@ -7,7 +7,6 @@ import { makeFindAllUsersUseCase } from '@/infra/factories/users'
 import { DateFnsAdapter } from '@/infra/date'
 
 import { UsersTable } from './UsersTable'
-import { InviteUser } from './InviteUser'
 
 interface UsersListProps {
   page: number
@@ -27,15 +26,7 @@ export async function UsersList({ page }: UsersListProps) {
   const { format } = new DateFnsAdapter()
 
   return (
-    <section className="bg-white p-5">
-      <header className="flex items-center justify-between">
-        <strong className="text-lg leading-[150%] font-semibold text-gray-500">
-          Usuários
-        </strong>
-
-        <InviteUser />
-      </header>
-
+    <>
       <UsersTable>
         {users.map((user) => (
           <Table.Row key={user.userId}>
@@ -65,6 +56,6 @@ export async function UsersList({ page }: UsersListProps) {
           </div>
         </footer>
       )}
-    </section>
+    </>
   )
 }

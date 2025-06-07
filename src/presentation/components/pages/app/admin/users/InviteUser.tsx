@@ -50,8 +50,6 @@ export function InviteUser() {
       status: 'success',
     })
 
-    console.log(pathname)
-
     await revalidatePage(pathname)
 
     setDialogIsOpen(false)

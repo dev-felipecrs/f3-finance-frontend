@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 
 import { z } from 'zod'
 import { Controller, useForm } from 'react-hook-form'
-import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, Dialog, Input, Select } from '@/presentation/components/shared'
+import { revalidatePage } from '@/presentation/actions'
 import { SonnerAdapter } from '@/infra/toast'
 import { makeCreateBankCreateBankAccountUseCase } from '@/infra/factories/bank-accounts'
 import { Bank } from '@/domain/entities'
@@ -33,7 +34,7 @@ const BANK_OPTIONS = [
 
 export function AddBankAccount() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
-  const queryClient = useQueryClient()
+  const pathname = usePathname()
 
   const { toast } = new SonnerAdapter()
 
@@ -66,9 +67,7 @@ export function AddBankAccount() {
       status: 'success',
     })
 
-    await queryClient.refetchQueries({
-      queryKey: ['bank-accounts'],
-    })
+    await revalidatePage(pathname)
 
     setDialogIsOpen(false)
   }

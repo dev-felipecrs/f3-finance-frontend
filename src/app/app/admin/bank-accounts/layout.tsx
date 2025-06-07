@@ -2,25 +2,27 @@ import React from 'react'
 
 import { Metadata } from 'next'
 
-import { InviteUser } from '@/presentation/components/pages/app/admin/users'
+import { AddBankAccount } from '@/presentation/components/pages/app/admin/bank-accounts'
 
-interface UsersLayoutProps {
+interface BankAccountsLayoutProps {
   children: React.ReactNode
 }
 
 export const metadata: Metadata = {
-  title: 'Usuários',
+  title: 'Contas Bancárias',
 }
 
-export default async function UsersLayout({ children }: UsersLayoutProps) {
+export default async function BankAccountsLayout({
+  children,
+}: BankAccountsLayoutProps) {
   return (
     <section className="bg-white p-5">
       <header className="flex items-center justify-between">
         <strong className="text-lg leading-[150%] font-semibold text-gray-500">
-          Usuários
+          Contas Bancárias
         </strong>
 
-        <InviteUser />
+        <AddBankAccount />
       </header>
 
       {children}
