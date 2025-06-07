@@ -7,120 +7,45 @@ import { condicionalStyles } from '@/presentation/helpers'
 
 import { PaginationControl } from './Control'
 
-import { Button } from '../Button'
-
 interface PaginationProps {
   currentPage: number
   totalPages: number
-  onChangePage(page: number): void
 }
 
-export function Pagination({
-  currentPage,
-  totalPages,
-  onChangePage,
-}: PaginationProps) {
+export function Pagination({ currentPage, totalPages }: PaginationProps) {
   return (
     <div className="flex items-center gap-4">
       <PaginationControl
         disabled={currentPage === 1}
-        onClick={() => onChangePage(currentPage - 1)}
+        href={{ query: { page: currentPage - 1 } }}
       >
         Anterior
       </PaginationControl>
 
       <div className="flex items-center gap-4">
         {Array.from({ length: totalPages }).map((_, index) => (
-          <Button.Root
+          <Link
             key={index}
-            onClick={() => onChangePage(index + 1)}
+            href={{ query: { page: index + 1 } }}
             className={condicionalStyles(
-              'h-9 w-10 border border-gray-200 bg-white hover:bg-white hover:brightness-95',
+              'text-sx flex h-10 w-11 cursor-pointer items-center justify-center gap-1 rounded-sm border border-gray-200 bg-white font-medium text-gray-500 transition hover:bg-white hover:brightness-95 disabled:brightness-75',
               {
-                'border-primary-500 bg-primary-500 hover:bg-primary-600 hover:brightness-100':
+                'border-primary-500! bg-primary-500! hover:bg-primary-600! text-white! hover:brightness-100!':
                   currentPage === index + 1,
               },
             )}
           >
-            <Button.Text
-              className={condicionalStyles(
-                'text-sx font-medium text-gray-500',
-                {
-                  'text-white': currentPage === index + 1,
-                },
-              )}
-            >
-              {index + 1}
-            </Button.Text>
-          </Button.Root>
+            {index + 1}
+          </Link>
         ))}
       </div>
 
       <PaginationControl
         disabled={currentPage === totalPages}
-        onClick={() => onChangePage(currentPage + 1)}
+        href={{ query: { page: currentPage + 1 } }}
       >
         Próximo
       </PaginationControl>
-    </div>
-  )
-}
-
-interface PaginationLinkProps {
-  currentPage: number
-  totalPages: number
-}
-
-export function PaginationLink({
-  currentPage,
-  totalPages,
-}: PaginationLinkProps) {
-  return (
-    <div className="flex items-center gap-4">
-      <Link href={{ query: { page: currentPage - 1 } }}>
-        <PaginationControl
-        // disabled={currentPage === 1}
-        // onClick={() => onChangePage(currentPage - 1)}
-        >
-          Anterior
-        </PaginationControl>
-      </Link>
-
-      <div className="flex items-center gap-4">
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <Button.Root
-            key={index}
-            // onClick={() => onChangePage(index + 1)}
-            className={condicionalStyles(
-              'h-9 w-10 border border-gray-200 bg-white hover:bg-white hover:brightness-95',
-              {
-                'border-primary-500 bg-primary-500 hover:bg-primary-600 hover:brightness-100':
-                  currentPage === index + 1,
-              },
-            )}
-          >
-            <Button.Text
-              className={condicionalStyles(
-                'text-sx font-medium text-gray-500',
-                {
-                  'text-white': currentPage === index + 1,
-                },
-              )}
-            >
-              {index + 1}
-            </Button.Text>
-          </Button.Root>
-        ))}
-      </div>
-
-      <Link href={{ query: { page: currentPage + 1 } }}>
-        <PaginationControl
-        // disabled={currentPage === totalPages}
-        // onClick={() => onChangePage(currentPage + 1)}
-        >
-          Próximo
-        </PaginationControl>
-      </Link>
     </div>
   )
 }
