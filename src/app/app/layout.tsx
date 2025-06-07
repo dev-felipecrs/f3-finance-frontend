@@ -26,7 +26,7 @@ export default async function LayoutApp({ children }: React.PropsWithChildren) {
     <main className="bg-light-mode flex h-screen w-screen">
       <Sidebar menuSections={menuSections} />
 
-      <div className="flex-1">
+      <div className="max-h-100vh flex-1 overflow-y-auto">
         <Header menuSections={menuSections} />
 
         <div className="p-6">{children}</div>
