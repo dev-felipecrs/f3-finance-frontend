@@ -2,12 +2,12 @@
 import React, { useState } from 'react'
 
 import { z } from 'zod'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { useQueryClient } from '@tanstack/react-query'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button, Dialog, Input } from '@/presentation/components/shared'
+import { Button, Dialog, Input, Select } from '@/presentation/components/shared'
 import { SonnerAdapter } from '@/infra/toast'
 import { makeCreateBankCreateBankAccountUseCase } from '@/infra/factories/bank-accounts'
 import { Bank } from '@/domain/entities'
@@ -25,13 +25,19 @@ const AddBankAccountSchema = z.object({
     .max(13, { message: 'Máximo de 13 caracteres' }),
 })
 
+const BANK_OPTIONS = [
+  { value: Bank.BRADESCO, label: 'Bradesco' },
+  { value: Bank.ITAU, label: 'Itaú' },
+  { value: Bank.STONE, label: 'Stone' },
+] as const
+
 export function AddBankAccount() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
   const queryClient = useQueryClient()
 
   const { toast } = new SonnerAdapter()
 
-  const { handleSubmit, register, formState } = useForm<
+  const { control, handleSubmit, register, formState } = useForm<
     z.infer<typeof AddBankAccountSchema>
   >({
     resolver: zodResolver(AddBankAccountSchema),
@@ -91,7 +97,7 @@ export function AddBankAccount() {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-5"
           >
             <Input.Root>
               <Input.Label htmlFor="name">Nome</Input.Label>
@@ -109,21 +115,31 @@ export function AddBankAccount() {
               )}
             </Input.Root>
 
-            <Input.Root>
-              <Input.Label htmlFor="bank">Banco</Input.Label>
+            <Select.Root>
+              <Select.Label htmlFor="bank">Banco</Select.Label>
 
-              <Input.Input
-                id="bank"
-                placeholder="Bradesco"
-                {...register('bank')}
+              <Controller
+                control={control}
+                name="bank"
+                render={({ field }) => (
+                  <Select.Field
+                    inputId="bank"
+                    placeholder="Selecione o banco"
+                    options={BANK_OPTIONS}
+                    value={BANK_OPTIONS.find(
+                      (option) => option.value === field.value,
+                    )}
+                    onChange={({ value }: any) => field.onChange(value)}
+                  />
+                )}
               />
 
               {formState.errors.bank && (
-                <Input.ErrorMessage>
+                <Select.ErrorMessage>
                   {formState.errors.bank.message}
-                </Input.ErrorMessage>
+                </Select.ErrorMessage>
               )}
-            </Input.Root>
+            </Select.Root>
 
             <Input.Root>
               <Input.Label htmlFor="agencyNumber">Agência</Input.Label>
