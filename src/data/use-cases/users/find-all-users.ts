@@ -38,6 +38,7 @@ export class FindAllUsersUseCase implements IFindAllUsersUseCase {
       headers: {
         Authorization: input.Authorization,
       },
+      revalidate: 60 * 60 * 1, // 1 hour
     })
 
     if (response.error || !response.data) {

@@ -41,6 +41,7 @@ export class FindAllBankAccountsUseCase implements IFindAllBankAccountsUseCase {
       headers: {
         Authorization: input.Authorization,
       },
+      revalidate: 60 * 60 * 1, // 1 hour
     })
 
     if (response.error || !response.data) {

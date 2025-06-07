@@ -3,11 +3,12 @@ import React, { useState } from 'react'
 
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { useQueryClient } from '@tanstack/react-query'
+import { usePathname } from 'next/navigation'
 import { Plus } from '@phosphor-icons/react/dist/ssr'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, Dialog, Input } from '@/presentation/components/shared'
+import { revalidatePage } from '@/presentation/actions'
 import { SonnerAdapter } from '@/infra/toast'
 import { makeInviteUserUseCase } from '@/infra/factories/users'
 
@@ -19,7 +20,7 @@ const InviteUserSchema = z.object({
 
 export function InviteUser() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
-  const queryClient = useQueryClient()
+  const pathname = usePathname()
 
   const { toast } = new SonnerAdapter()
 
@@ -49,9 +50,9 @@ export function InviteUser() {
       status: 'success',
     })
 
-    await queryClient.refetchQueries({
-      queryKey: ['users'],
-    })
+    console.log(pathname)
+
+    await revalidatePage(pathname)
 
     setDialogIsOpen(false)
   }

@@ -41,6 +41,7 @@ export class FindAllTransactionsUseCase implements IFindAllTransactionsUseCase {
       headers: {
         Authorization: input.Authorization,
       },
+      revalidate: 60 * 60 * 1, // 1 hour
     })
 
     if (response.error || !response.data) {
