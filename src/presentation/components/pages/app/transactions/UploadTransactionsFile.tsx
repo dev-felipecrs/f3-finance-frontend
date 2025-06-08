@@ -137,15 +137,17 @@ export function UploadTransactionsFile({
             className="flex flex-col gap-5"
           >
             <Select.Root>
-              <Select.Label htmlFor="bankAccountId">Banco</Select.Label>
+              <Select.Label htmlFor="bankAccountId">
+                Conta Bancária
+              </Select.Label>
 
               <Controller
                 control={control}
                 name="bankAccountId"
                 render={({ field }) => (
                   <Select.Field
-                    inputId="bank"
-                    placeholder="Selecione o banco"
+                    inputId="bankAccount"
+                    placeholder="Selecione a conta bancária"
                     options={bankAccountsOptions}
                     value={bankAccountsOptions.find(
                       (option) => option.value === field.value,
