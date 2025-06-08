@@ -1,5 +1,6 @@
 export * from './Button'
 export * from './Dialog'
+export * from './DropzoneFile'
 export * from './Header'
 export * from './Input'
 export * from './Logo'

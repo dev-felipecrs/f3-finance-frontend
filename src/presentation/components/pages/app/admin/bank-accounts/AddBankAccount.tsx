@@ -173,11 +173,7 @@ export function AddBankAccount() {
             </Input.Root>
 
             <footer className="mt-8 flex items-center justify-end">
-              <Button.Root
-                type="submit"
-                onClick={() => console.log(formState.errors)}
-                isLoading={formState.isSubmitting}
-              >
+              <Button.Root type="submit" isLoading={formState.isSubmitting}>
                 <Button.Text>Adicionar</Button.Text>
               </Button.Root>
             </footer>

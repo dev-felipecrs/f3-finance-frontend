@@ -2,6 +2,7 @@
 
 import React from 'react'
 
+import { twMerge } from 'tailwind-merge'
 import { Eye, EyeSlash } from '@phosphor-icons/react'
 
 import { condicionalStyles } from '@/presentation/helpers'
@@ -28,15 +29,18 @@ export const InputField = React.forwardRef<HTMLInputElement, InputFieldProps>(
 
         <input
           type={isPassword && showPassword ? 'text' : type}
+          ref={ref}
+          {...props}
           className={condicionalStyles(
-            'bg-background flex w-full rounded-sm border border-gray-200 px-5 py-4 text-sm text-gray-500 placeholder:text-gray-300 focus-visible:ring-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+            twMerge(
+              'bg-background flex w-full rounded-sm border border-gray-200 px-5 py-4 text-sm text-gray-500 placeholder:text-gray-300 focus-visible:ring-1 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50',
+              props.className ?? '',
+            ),
             {
               'pl-10': !!(icon && iconPosition === 'left'),
               'pr-10': (icon && iconPosition === 'right') || isPassword,
             },
           )}
-          ref={ref}
-          {...props}
         />
 
         {icon && iconPosition === 'right' && !isPassword && (
