@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Metadata } from 'next'
 
-import { makeFindAllTransactionsUseCase } from '@/infra/factories/transactions'
 import { DashboardCharts } from '@/presentation/components/pages/app/admin/dashboard'
+import { makeFindAllTransactionsUseCase } from '@/infra/factories/transactions'
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const findAllTransactions = makeFindAllTransactionsUseCase()
-  const result = await findAllTransactions.execute({ page: 1, pageSize: 500, filters: {} })
+  const result = await findAllTransactions.execute({
+    page: 1,
+    pageSize: 500,
+    filters: {},
+  })
   const transactions = (result.data?.pageResult ?? []).map((t) => ({
     amount: t.amount,
     transactionType: t.transactionType,

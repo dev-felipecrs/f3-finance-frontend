@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React from 'react'
 
@@ -6,7 +6,9 @@ import dynamic from 'next/dynamic'
 
 import { TransactionType } from '@/domain/entities'
 
-const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false }) as any
+const ReactApexChart = dynamic(() => import('react-apexcharts'), {
+  ssr: false,
+}) as any
 
 export interface DashboardTransactionDTO {
   amount: number
@@ -16,7 +18,10 @@ export interface DashboardTransactionDTO {
 
 type Period = '3m' | '6m' | '12m'
 
-function filterByPeriod(transactions: DashboardTransactionDTO[], period: Period) {
+function filterByPeriod(
+  transactions: DashboardTransactionDTO[],
+  period: Period,
+) {
   const now = new Date()
   const start = new Date(now)
   if (period === '3m') start.setMonth(start.getMonth() - 3)
@@ -75,7 +80,6 @@ export function DashboardCharts({
   const donutFiltered = filterByPeriod(transactions, donutPeriod)
   const areaMonths = areaPeriod === '12m' ? 12 : areaPeriod === '6m' ? 6 : 3
   const barMonths = barPeriod === '12m' ? 12 : barPeriod === '6m' ? 6 : 3
-  const boxMonths = boxPeriod === '12m' ? 12 : boxPeriod === '6m' ? 6 : 3
 
   const { income: donutIncome, expense: donutExpense } = groupMonthly(
     donutFiltered,
@@ -91,10 +95,11 @@ export function DashboardCharts({
   )
 
   const barFiltered = filterByPeriod(transactions, barPeriod)
-  const { labels: barLabels, income: barIncome, expense: barExpense } = groupMonthly(
-    barFiltered,
-    barMonths,
-  )
+  const {
+    labels: barLabels,
+    income: barIncome,
+    expense: barExpense,
+  } = groupMonthly(barFiltered, barMonths)
 
   const boxFiltered = filterByPeriod(transactions, boxPeriod)
 
@@ -107,7 +112,9 @@ export function DashboardCharts({
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="rounded-lg border border-gray-200 bg-white p-4">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-gray-500">Receitas vs Despesas</h3>
+            <h3 className="text-sm font-medium text-gray-500">
+              Receitas vs Despesas
+            </h3>
             <div className="flex items-center gap-2">
               {(['3m', '6m', '12m'] as Period[]).map((p) => (
                 <button
@@ -214,7 +221,9 @@ export function DashboardCharts({
 
         <div className="rounded-lg border border-gray-200 bg-white p-4 md:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-gray-500">Receitas e Despesas por mês</h3>
+            <h3 className="text-sm font-medium text-gray-500">
+              Receitas e Despesas por mês
+            </h3>
             <div className="flex items-center gap-2">
               {(['3m', '6m', '12m'] as Period[]).map((p) => (
                 <button
@@ -261,7 +270,9 @@ export function DashboardCharts({
 
         <div className="rounded-lg border border-gray-200 bg-white p-4 md:col-span-2">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-medium text-gray-500">Distribuição de valores</h3>
+            <h3 className="text-sm font-medium text-gray-500">
+              Distribuição de valores
+            </h3>
             <div className="flex items-center gap-2">
               {(['3m', '6m', '12m'] as Period[]).map((p) => (
                 <button
@@ -292,25 +303,37 @@ export function DashboardCharts({
                 data: [
                   (() => {
                     const vals = boxFiltered
-                      .filter((t) => t.transactionType === TransactionType.INCOME)
+                      .filter(
+                        (t) => t.transactionType === TransactionType.INCOME,
+                      )
                       .map((t) => t.amount)
                       .sort((a, b) => a - b)
-                    if (vals.length === 0) return { x: 'Receitas', y: [0, 0, 0, 0, 0] }
+                    if (vals.length === 0)
+                      return { x: 'Receitas', y: [0, 0, 0, 0, 0] }
                     const q1 = vals[Math.floor(vals.length * 0.25)]
                     const q2 = vals[Math.floor(vals.length * 0.5)]
                     const q3 = vals[Math.floor(vals.length * 0.75)]
-                    return { x: 'Receitas', y: [vals[0], q1, q2, q3, vals[vals.length - 1]] }
+                    return {
+                      x: 'Receitas',
+                      y: [vals[0], q1, q2, q3, vals[vals.length - 1]],
+                    }
                   })(),
                   (() => {
                     const vals = boxFiltered
-                      .filter((t) => t.transactionType === TransactionType.EXPENSE)
+                      .filter(
+                        (t) => t.transactionType === TransactionType.EXPENSE,
+                      )
                       .map((t) => t.amount)
                       .sort((a, b) => a - b)
-                    if (vals.length === 0) return { x: 'Despesas', y: [0, 0, 0, 0, 0] }
+                    if (vals.length === 0)
+                      return { x: 'Despesas', y: [0, 0, 0, 0, 0] }
                     const q1 = vals[Math.floor(vals.length * 0.25)]
                     const q2 = vals[Math.floor(vals.length * 0.5)]
                     const q3 = vals[Math.floor(vals.length * 0.75)]
-                    return { x: 'Despesas', y: [vals[0], q1, q2, q3, vals[vals.length - 1]] }
+                    return {
+                      x: 'Despesas',
+                      y: [vals[0], q1, q2, q3, vals[vals.length - 1]],
+                    }
                   })(),
                 ],
               },
@@ -321,5 +344,3 @@ export function DashboardCharts({
     </div>
   )
 }
-
-
