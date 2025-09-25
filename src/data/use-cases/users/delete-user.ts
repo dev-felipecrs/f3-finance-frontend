@@ -3,7 +3,6 @@ import {
   UseCaseErrorHandlerDecorator,
 } from '@/presentation/decorators'
 import { IDeleteUserUseCase } from '@/domain/use-cases/users'
-
 import { HttpClient } from '@/data/protocols/http'
 
 type DeleteUserReturn = {}

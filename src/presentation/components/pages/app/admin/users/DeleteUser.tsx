@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { Trash } from '@phosphor-icons/react/dist/ssr'
 
-import { Button, Dialog, Input } from '@/presentation/components/shared'
+import { Button, Dialog } from '@/presentation/components/shared'
 import { revalidatePage } from '@/presentation/actions'
 import { SonnerAdapter } from '@/infra/toast'
 import { makeDeleteUserUseCase } from '@/infra/factories/users'
@@ -14,10 +14,7 @@ type DeleteUserProps = {
   email: string
 }
 
-export function DeleteUser({
-  userId, 
-  email
-}: DeleteUserProps) {
+export function DeleteUser({ userId, email }: DeleteUserProps) {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -68,27 +65,30 @@ export function DeleteUser({
             <h2 className="text-lg font-semibold text-gray-800">
               Tem certeza que deseja deletar este usuário?
             </h2>
-            <p className="text-sm text-gray-600 mt-2">
-              Tem certeza que deseja excluir o usuário com e-mail{" "}
-              <span className="font-medium text-gray-800">{email}</span>?
-              Esta ação é <span className="font-semibold text-red-600">irreversível</span> {/* */}
-              e todos os dados associados serão permanentemente removidos.
+            <p className="mt-2 text-sm text-gray-600">
+              Tem certeza que deseja excluir o usuário com e-mail{' '}
+              <span className="font-medium text-gray-800">{email}</span>? Esta
+              ação é{' '}
+              <span className="font-semibold text-red-600">irreversível</span>{' '}
+              {/* */}e todos os dados associados serão permanentemente
+              removidos.
             </p>
-
           </header>
 
-          <footer className="mt-8 flex items-center gap-2 justify-end">
+          <footer className="mt-8 flex items-center justify-end gap-2">
             <Button.Root
               type="button"
-              onClick={() => setDialogIsOpen(false)} 
-              className='bg-gray-100 hover:bg-gray-200 text-gray-500'
+              onClick={() => setDialogIsOpen(false)}
+              className="bg-gray-100 text-gray-500 hover:bg-gray-200"
             >
-              <Button.Text className='text-gray-400 hover:text-gray-500'>Cancelar</Button.Text>
+              <Button.Text className="text-gray-400 hover:text-gray-500">
+                Cancelar
+              </Button.Text>
             </Button.Root>
 
             <Button.Root
               type="button"
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className="bg-red-600 text-white hover:bg-red-700"
               onClick={onSubmit}
             >
               <Button.Text>Deletar</Button.Text>

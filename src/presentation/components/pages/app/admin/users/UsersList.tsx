@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 import { Pagination, Table } from '@/presentation/components/shared'
 import { makeFindAllUsersUseCase } from '@/infra/factories/users'
 import { DateFnsAdapter } from '@/infra/date'
@@ -36,12 +35,9 @@ export async function UsersList({ page }: UsersListProps) {
             <Table.Cell className="md:w-64">
               {format(user.createdAt, "dd 'de' MMMM 'de' yyyy")}
             </Table.Cell>
-            
+
             <Table.Cell className="text-right">
-              <DeleteUser 
-                email={user.email} 
-                userId={user.userId} 
-              />
+              <DeleteUser email={user.email} userId={user.userId} />
             </Table.Cell>
           </Table.Row>
         ))}
