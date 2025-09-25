@@ -1,46 +1,29 @@
-'use client'
 import React from 'react'
 
-import ApexCharts from 'react-apexcharts'
+import { Metadata } from 'next'
 
-export default function Page() {
-  const chartOptions = {
-    chart: {
-      id: 'line-chart',
-      toolbar: {
-        show: false
-      },
-    },
-    xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    },
-    stroke: {
-      curve: 'smooth',
-    },
-    title: {
-      text: 'Monthly Revenue',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-        fontWeight: 'bold',
-        fontFamily: undefined,
-      },
-    },
-    grid: {
-      show: true,
-    },
-    colors: ['#1A2DD8'],  // Customize the color of the line
-  };
+import { makeFindAllTransactionsUseCase } from '@/infra/factories/transactions'
+import { DashboardCharts } from '@/presentation/components/pages/app/admin/dashboard'
 
-  const chartSeries = [
-    {
-      name: 'Revenue',
-      data: [30, 40, 35, 50, 49, 60, 70, 91, 125, 140, 150, 180], // Example data
-    },
-  ];
+export const metadata: Metadata = {
+  title: 'Dashboard',
+}
+
+export default async function Page() {
+  const findAllTransactions = makeFindAllTransactionsUseCase()
+  const result = await findAllTransactions.execute({ page: 1, pageSize: 500, filters: {} })
+  const transactions = (result.data?.pageResult ?? []).map((t) => ({
+    amount: t.amount,
+    transactionType: t.transactionType,
+    transactedAt: new Date(t.transactedAt).toISOString(),
+  }))
+
   return (
     <div className="bg-light-mode h-full w-full">
-      <ApexCharts options={chartOptions} series={chartSeries} type="line" height={350} />
+      <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
+      <section className="mt-6">
+        <DashboardCharts initialTransactions={transactions} />
+      </section>
     </div>
   )
 }
