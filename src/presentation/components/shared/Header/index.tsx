@@ -34,11 +34,7 @@ export function Header({ menuSections }: HeaderProps) {
         <Logo size="md" />
       </div>
 
-      <button
-        className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200 bg-white p-[1.125rem] transition-all hover:brightness-95"
-      >
-        <LogoutButton />
-      </button>
+      <LogoutButton />
     </header>
   )
 }

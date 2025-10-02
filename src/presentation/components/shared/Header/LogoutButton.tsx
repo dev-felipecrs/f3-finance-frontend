@@ -32,7 +32,9 @@ export function LogoutButton() {
   return (
     <Dialog.Root open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <Dialog.Trigger>
-        <button type="button" className="group cursor-pointer">
+        <button
+          className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200 bg-white p-[1.125rem] transition-all hover:brightness-95"
+        >
           <User size={24} className="h-5 w-5 text-gray-400 transition-colors group-hover:text-gray-500 md:h-6 md:w-6" />
         </button>
       </Dialog.Trigger>
