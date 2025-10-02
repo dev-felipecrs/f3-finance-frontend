@@ -48,9 +48,9 @@ export async function TransactionsList({ page }: TransactionsListProps) {
               {format(transaction.transactedAt, "dd 'de' MMMM 'de' yyyy")}
             </Table.Cell>
             <Table.Cell className="text-right">
-              <DeleteTransaction 
-                transactionType={transaction.transactionType} 
-                transactionId={transaction.transactionId} 
+              <DeleteTransaction
+                transactionType={transaction.transactionType}
+                transactionId={transaction.transactionId}
               />
             </Table.Cell>
           </Table.Row>

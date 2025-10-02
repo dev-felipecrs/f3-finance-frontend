@@ -1,13 +1,13 @@
 'use client'
 import React, { useState } from 'react'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { User } from '@phosphor-icons/react/dist/ssr'
 
-import { Button, Dialog } from '@/presentation/components/shared'
-import { SonnerAdapter } from '@/infra/toast'
-import { deleteCookie } from '@/presentation/actions/delete-cookie'
 import { AUTHENTICATED_USER_COOKIE_KEY } from '@/presentation/constants'
+import { Button, Dialog } from '@/presentation/components/shared'
+import { deleteCookie } from '@/presentation/actions/delete-cookie'
+import { SonnerAdapter } from '@/infra/toast'
 
 export function LogoutButton() {
   const router = useRouter()
@@ -32,10 +32,11 @@ export function LogoutButton() {
   return (
     <Dialog.Root open={dialogIsOpen} onOpenChange={setDialogIsOpen}>
       <Dialog.Trigger>
-        <button
-          className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200 bg-white p-[1.125rem] transition-all hover:brightness-95"
-        >
-          <User size={24} className="h-5 w-5 text-gray-400 transition-colors group-hover:text-gray-500 md:h-6 md:w-6" />
+        <button className="flex h-16 w-16 items-center justify-center rounded-lg border border-gray-200 bg-white p-[1.125rem] transition-all hover:brightness-95">
+          <User
+            size={24}
+            className="h-5 w-5 text-gray-400 transition-colors group-hover:text-gray-500 md:h-6 md:w-6"
+          />
         </button>
       </Dialog.Trigger>
 

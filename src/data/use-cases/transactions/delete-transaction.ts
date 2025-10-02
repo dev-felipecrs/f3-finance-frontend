@@ -18,7 +18,7 @@ export class DeleteTransactionUseCase implements IDeleteTransactionUseCase {
     input: IDeleteTransactionUseCase.Input,
   ): Promise<HttpClient.Output<IDeleteTransactionUseCase.Output>> {
     const response = await this.http.on<DeleteTransactionReturn>({
-      url: process.env.BASE_API_URL +  `/transactions/${input.transactionId}`,
+      url: process.env.BASE_API_URL + `/transactions/${input.transactionId}`,
       method: 'DELETE',
       headers: {
         Authorization: input.Authorization,

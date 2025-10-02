@@ -4,8 +4,8 @@ import React from 'react'
 
 import dynamic from 'next/dynamic'
 
-import { TransactionType } from '@/domain/entities'
 import { DateFnsAdapter } from '@/infra/date'
+import { TransactionType } from '@/domain/entities'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,

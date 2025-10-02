@@ -8,8 +8,8 @@ import { Button, Dialog } from '@/presentation/components/shared'
 import { revalidatePage } from '@/presentation/actions'
 import { SonnerAdapter } from '@/infra/toast'
 import { makeDeleteTransactionUseCase } from '@/infra/factories/transactions'
-
 import type { TransactionType } from '@/domain/entities'
+
 import { TRANSACTION_TYPES_MAPPER } from './TransactionsList'
 
 type DeleteTransactionProps = {
@@ -17,7 +17,10 @@ type DeleteTransactionProps = {
   transactionType: TransactionType
 }
 
-export function DeleteTransaction({ transactionId, transactionType }: DeleteTransactionProps) {
+export function DeleteTransaction({
+  transactionId,
+  transactionType,
+}: DeleteTransactionProps) {
   const [dialogIsOpen, setDialogIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -30,26 +33,25 @@ export function DeleteTransaction({ transactionId, transactionType }: DeleteTran
       const response = await deleteTransactionUseCase.execute({
         transactionId,
       })
-  
+
       if (!response.data) {
         setDialogIsOpen(false)
-  
+
         return toast({
           text: response.error?.message || '',
           status: 'error',
         })
       }
-  
+
       toast({
         text: 'Transação deletada',
         status: 'success',
       })
-  
-      await revalidatePage(pathname)
-  
-      setDialogIsOpen(false) 
-    } catch (error) {
 
+      await revalidatePage(pathname)
+
+      setDialogIsOpen(false)
+    } catch (error) {
       if (error instanceof Error) {
         toast({
           text: error.message,
@@ -87,9 +89,13 @@ export function DeleteTransaction({ transactionId, transactionType }: DeleteTran
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               Você está prestes a deletar uma transação do tipo{' '}
-              <span className="font-medium text-gray-800">{TRANSACTION_TYPES_MAPPER[transactionType]}</span>. 
-              Essa ação é <span className="font-semibold text-red-600">irreversível</span> e todos os dados relacionados a esta transação serão permanentemente removidos.
-              Tem certeza que deseja continuar?
+              <span className="font-medium text-gray-800">
+                {TRANSACTION_TYPES_MAPPER[transactionType]}
+              </span>
+              . Essa ação é{' '}
+              <span className="font-semibold text-red-600">irreversível</span> e
+              todos os dados relacionados a esta transação serão permanentemente
+              removidos. Tem certeza que deseja continuar?
             </p>
           </header>
 

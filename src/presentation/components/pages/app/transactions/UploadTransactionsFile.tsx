@@ -101,7 +101,7 @@ export function UploadTransactionsFile({
 
       setDialogIsOpen(false)
       reset()
-    } catch (error) {
+    } catch {
       toast({
         text: 'Um erro inesperado ocorreu',
         status: 'error',

@@ -5,9 +5,10 @@ import { List } from '@phosphor-icons/react'
 
 import { MenuSection } from '@/presentation/constants'
 
+import { LogoutButton } from './LogoutButton'
+
 import { MobileSidebar } from '../Sidebar'
 import { Logo } from '../Logo'
-import { LogoutButton } from './LogoutButton'
 
 interface HeaderProps {
   menuSections: MenuSection[]
