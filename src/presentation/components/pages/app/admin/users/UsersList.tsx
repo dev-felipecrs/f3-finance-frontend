@@ -1,12 +1,11 @@
 import React from 'react'
 
-import { Trash } from '@phosphor-icons/react/dist/ssr'
-
 import { Pagination, Table } from '@/presentation/components/shared'
 import { makeFindAllUsersUseCase } from '@/infra/factories/users'
 import { DateFnsAdapter } from '@/infra/date'
 
 import { UsersTable } from './UsersTable'
+import { DeleteUser } from './DeleteUser'
 
 interface UsersListProps {
   page: number
@@ -25,6 +24,8 @@ export async function UsersList({ page }: UsersListProps) {
 
   const { format } = new DateFnsAdapter()
 
+  console.log(users)
+
   return (
     <>
       <UsersTable>
@@ -34,10 +35,9 @@ export async function UsersList({ page }: UsersListProps) {
             <Table.Cell className="md:w-64">
               {format(user.createdAt, "dd 'de' MMMM 'de' yyyy")}
             </Table.Cell>
+
             <Table.Cell className="text-right">
-              <button type="button" className="group cursor-pointer">
-                <Trash className="h-5 w-5 text-gray-400 transition-colors group-hover:text-gray-500 md:h-6 md:w-6" />
-              </button>
+              <DeleteUser email={user.email} userId={user.userId} />
             </Table.Cell>
           </Table.Row>
         ))}
