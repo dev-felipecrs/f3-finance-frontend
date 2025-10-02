@@ -1,2 +1,5 @@
 export * from './add'
 export * from './format'
+export * from './sub'
+export * from './start-of-month'
+export * from './is-after'
