@@ -5,10 +5,13 @@ import React from 'react'
 import dynamic from 'next/dynamic'
 
 import { TransactionType } from '@/domain/entities'
+import { DateFnsAdapter } from '@/infra/date'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
 }) as any
+
+const dateAdapter = new DateFnsAdapter()
 
 export interface DashboardTransactionDTO {
   amount: number
@@ -23,11 +26,15 @@ function filterByPeriod(
   period: Period,
 ) {
   const now = new Date()
-  const start = new Date(now)
-  if (period === '3m') start.setMonth(start.getMonth() - 3)
-  if (period === '6m') start.setMonth(start.getMonth() - 6)
-  if (period === '12m') start.setMonth(start.getMonth() - 12)
-  return transactions.filter((t) => new Date(t.transactedAt) >= start)
+
+  const monthsToSubtract = period === '3m' ? 3 : period === '6m' ? 6 : 12
+  const start = dateAdapter.sub(now, { months: monthsToSubtract })
+
+  return transactions.filter(
+    (t) =>
+      dateAdapter.isAfter(new Date(t.transactedAt), start) ||
+      new Date(t.transactedAt).getTime() === start.getTime(),
+  )
 }
 
 function groupMonthly(transactions: DashboardTransactionDTO[], months: number) {
@@ -35,12 +42,11 @@ function groupMonthly(transactions: DashboardTransactionDTO[], months: number) {
   const labels: string[] = []
   const keys: string[] = []
   for (let i = months - 1; i >= 0; i--) {
-    const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
-    const label = d.toLocaleDateString('pt-BR', {
-      month: 'short',
-      year: '2-digit',
-    })
+    const monthStart = dateAdapter.startOfMonth(
+      dateAdapter.sub(now, { months: i }),
+    )
+    const key = dateAdapter.format(monthStart, 'yyyy-MM')
+    const label = dateAdapter.format(monthStart, 'MMM/yy')
     keys.push(key)
     labels.push(label)
   }
@@ -49,8 +55,8 @@ function groupMonthly(transactions: DashboardTransactionDTO[], months: number) {
   const net: number[] = Array(keys.length).fill(0)
 
   for (const t of transactions) {
-    const d = new Date(t.transactedAt)
-    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`
+    const transactionDate = new Date(t.transactedAt)
+    const key = dateAdapter.format(transactionDate, 'yyyy-MM')
     const idx = keys.indexOf(key)
     if (idx === -1) continue
     if (t.transactionType === TransactionType.INCOME) {

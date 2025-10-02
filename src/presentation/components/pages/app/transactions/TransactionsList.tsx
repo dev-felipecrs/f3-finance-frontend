@@ -1,13 +1,12 @@
 import React from 'react'
 
-import { Trash } from '@phosphor-icons/react/dist/ssr'
-
 import { Pagination, Table } from '@/presentation/components/shared'
 import { makeFindAllTransactionsUseCase } from '@/infra/factories/transactions'
 import { DateFnsAdapter } from '@/infra/date'
 import { TransactionType } from '@/domain/entities'
 
 import { TransactionsTable } from './TransactionsTable'
+import { DeleteTransaction } from './DeleteTransaction'
 
 interface TransactionsListProps {
   page: number
@@ -15,7 +14,7 @@ interface TransactionsListProps {
 
 const PAGE_SIZE = 50
 
-const TRANSACTION_TYPES_MAPPER: Record<TransactionType, string> = {
+export const TRANSACTION_TYPES_MAPPER: Record<TransactionType, string> = {
   expense: 'Despesa',
   income: 'Receita',
 }
@@ -49,9 +48,10 @@ export async function TransactionsList({ page }: TransactionsListProps) {
               {format(transaction.transactedAt, "dd 'de' MMMM 'de' yyyy")}
             </Table.Cell>
             <Table.Cell className="text-right">
-              <button type="button" className="group cursor-pointer">
-                <Trash className="h-5 w-5 text-gray-400 transition-colors group-hover:text-gray-500 md:h-6 md:w-6" />
-              </button>
+              <DeleteTransaction 
+                transactionType={transaction.transactionType} 
+                transactionId={transaction.transactionId} 
+              />
             </Table.Cell>
           </Table.Row>
         ))}
@@ -60,7 +60,7 @@ export async function TransactionsList({ page }: TransactionsListProps) {
       {data?.data && (
         <footer className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 md:flex-row">
           <span className="px-5 text-xs font-medium text-gray-300">
-            Mostrando de {(data.data.page - 1) * PAGE_SIZE + 1} à{' '}
+            Mostrando de {(data.data.page - 1) * PAGE_SIZE + 1} a{' '}
             {Math.min(data.data.page * PAGE_SIZE, data.data.totalCount)} de{' '}
             {data.data.totalCount} transações
           </span>

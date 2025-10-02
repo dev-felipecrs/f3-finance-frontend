@@ -55,7 +55,7 @@ export async function BankAccountsList({ page }: BankAccountsListProps) {
       {data?.data && (
         <footer className="flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 md:flex-row">
           <span className="px-5 text-xs font-medium text-gray-300">
-            Mostrando de {(data.data.page - 1) * PAGE_SIZE + 1} à{' '}
+            Mostrando de {(data.data.page - 1) * PAGE_SIZE + 1} a{' '}
             {Math.min(data.data.page * PAGE_SIZE, data.data.totalCount)} de{' '}
             {data.data.totalCount} contas bancárias
           </span>
