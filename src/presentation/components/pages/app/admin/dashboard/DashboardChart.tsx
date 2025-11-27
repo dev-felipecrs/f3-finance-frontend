@@ -81,7 +81,7 @@ export function DashboardCharts({
   const [donutPeriod, setDonutPeriod] = React.useState<Period>('12m')
   const [areaPeriod, setAreaPeriod] = React.useState<Period>('12m')
   const [barPeriod, setBarPeriod] = React.useState<Period>('12m')
-  const [boxPeriod, setBoxPeriod] = React.useState<Period>('12m')
+  // const [boxPeriod, setBoxPeriod] = React.useState<Period>('12m')
 
   const donutFiltered = filterByPeriod(transactions, donutPeriod)
   const areaMonths = areaPeriod === '12m' ? 12 : areaPeriod === '6m' ? 6 : 3
@@ -107,7 +107,7 @@ export function DashboardCharts({
     expense: barExpense,
   } = groupMonthly(barFiltered, barMonths)
 
-  const boxFiltered = filterByPeriod(transactions, boxPeriod)
+  // const boxFiltered = filterByPeriod(transactions, boxPeriod)
 
   return (
     <div className="flex flex-col gap-6">
@@ -256,6 +256,16 @@ export function DashboardCharts({
               colors: ['#10b981', '#ef4444'],
               dataLabels: { enabled: false },
               legend: { position: 'bottom' },
+              yaxis: {
+                labels: {
+                  formatter: (val: number) =>
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                      maximumFractionDigits: 0,
+                    }).format(val),
+                },
+              },
               tooltip: {
                 y: {
                   formatter: (val: number) =>
@@ -274,7 +284,7 @@ export function DashboardCharts({
           />
         </div>
 
-        <div className="rounded-lg border border-gray-200 bg-white p-4 md:col-span-2">
+        {/* <div className="rounded-lg border border-gray-200 bg-white p-4 md:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-sm font-medium text-gray-500">
               Distribuição de valores
@@ -345,7 +355,7 @@ export function DashboardCharts({
               },
             ]}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   )
