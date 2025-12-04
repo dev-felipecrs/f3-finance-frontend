@@ -73,7 +73,7 @@ export function ChatBot() {
           >
             <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
               <h2 className="text-lg font-semibold text-gray-900">
-                Assistente Financeiro
+                fIA - Assistente Financeiro
               </h2>
               <Dialog.Close
                 className="text-gray-400 transition-colors hover:text-gray-600"
@@ -93,7 +93,8 @@ export function ChatBot() {
                       className="mx-auto mb-4 text-blue-600"
                     />
                     <p className="text-gray-600">
-                      Olá! Como posso ajudá-lo com suas finanças hoje?
+                      Olá, sou a fIA! Como posso ajudá-lo com suas finanças
+                      hoje?
                     </p>
                     <p className="mt-2 text-sm text-gray-500">
                       Pergunte sobre receitas, despesas, valores em períodos
