@@ -1,4 +1,5 @@
 export * from './Button'
+export * from './ChatBot'
 export * from './Dialog'
 export * from './DropzoneFile'
 export * from './Header'

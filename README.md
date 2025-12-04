@@ -2,6 +2,22 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Variáveis de Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
+
+```env
+OPENAI_API_KEY=sua_chave_da_api_openai_aqui
+```
+
+Para obter uma chave da API da OpenAI:
+1. Acesse [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Faça login na sua conta OpenAI
+3. Crie uma nova chave de API
+4. Copie a chave e adicione ao arquivo `.env.local`
+
+### Executando o Projeto
+
 First, run the development server:
 
 ```bash

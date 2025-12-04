@@ -7,7 +7,7 @@ import {
   AUTHENTICATED_USER_COOKIE_KEY,
   USER_MENU_SECTIONS,
 } from '@/presentation/constants'
-import { Header, Sidebar } from '@/presentation/components/shared'
+import { ChatBot, Header, Sidebar } from '@/presentation/components/shared'
 import { getCookie } from '@/presentation/actions'
 import { UserCookiePayload } from '@/domain/models'
 
@@ -31,6 +31,8 @@ export default async function LayoutApp({ children }: React.PropsWithChildren) {
 
         <div className="p-6">{children}</div>
       </div>
+
+      <ChatBot />
     </main>
   )
 }
